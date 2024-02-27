@@ -1,6 +1,6 @@
 # Command Line Tool
 
-This repository is for projects take the form of command line tools. 
+This repository is for projects that take the form of command line tools. 
 
 Each tool will be implemented in a different language, and each language be will chosen for the project for a particular purpose. 
 
