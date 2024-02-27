@@ -15,6 +15,10 @@ begin
 rescue JSON::ParserError 
     # apparently, the error is caused by the "meanings" field.
     # "hello" is fine, but "beginning" is not.
+
+    # UPDATE: JSON.parse appears to work when its input is the body of a 
+    # get_response, rather than a get
+
     puts "Couldn't parse JSON request."
     puts "Original response: "
     puts original_request

@@ -20,22 +20,42 @@ https://api.dictionaryapi.dev/api/v2/entries/en/hello
 require "net/http"
 require "json"
 
-path_template = "https://api.dictionaryapi.dev/api/v2/entries/en/"
+class Dictionary
+    def enter_word()
+        puts "Please enter a word: "
+        word = gets.chomp
+        unless word.nil?
+            word
+        else
+            ""
+        end
+    end
 
-puts "Please enter a word to see its details: "
-word = gets.chomp
-uri = URI(path_template + word)
+    def get_word_data(word)
+        path_template = "https://api.dictionaryapi.dev/api/v2/entries/en/"
+        uri = URI(path_template + word)
+        request = Net::HTTP.get_response(uri)
+        if request.message == "OK"
+            request.body
+        else
+            "Error: Could not retrieve data for word: '#{word}'"
+        end
+    end
 
-
-request = Net::HTTP.get_response(uri)
-begin
-    result = 
-        request
-            .body 
-            .tr("{}", "") # remove the curly braces
-            .split(",") # split at entries
-            .join("\n")[1..-2] # format into a multiline string without surrounding brackets
-    puts result
-rescue 
-    puts "Error parsing response"
+    def parse_word_data(data)
+        begin 
+            result = JSON.parse(data)
+            result[0]
+        rescue
+            puts "Error: Could not parse word data"
+            {}
+        end
+    end
 end
+
+dict = Dictionary.new
+word = dict.enter_word()
+data = dict.get_word_data(word)
+result = dict.parse_word_data(data)
+
+puts result
