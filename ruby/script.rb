@@ -27,29 +27,15 @@ word = gets.chomp
 uri = URI(path_template + word)
 
 
-request = Net::HTTP.get(uri)[1..-2]
-result = request.tr("{}", "").split(",")
-puts result
-
-
-=begin
-First attempt:
-
-request = Net::HTTP.get(uri)
-original_request = request
-until request[0] == '{' do
-    request = request[1..-1]
-end
-
+request = Net::HTTP.get_response(uri)
 begin
-    result = JSON.parse(request[0..-2])
-rescue JSON::ParserError 
-    # apparently, the error is caused by the "meanings" field.
-    # "hello" is fine, but "beginning" is not.
-    puts "Couldn't parse JSON request."
-    puts "Original response: "
-    puts original_request
-else
+    result = 
+        request
+            .body 
+            .tr("{}", "") # remove the curly braces
+            .split(",") # split at entries
+            .join("\n")[1..-2] # format into a multiline string without surrounding brackets
     puts result
+rescue 
+    puts "Error parsing response"
 end
-=end
