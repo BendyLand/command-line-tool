@@ -3,10 +3,6 @@ Ruby project:
 Dictionary lookup from:
     https://dictionaryapi.dev/
 
-Example websites to use:
-    https://example.com/
-    https://jsonplaceholder.typicode.com/
-
 Usage:
 The basic syntax of a URL request to the API is shown below:
 

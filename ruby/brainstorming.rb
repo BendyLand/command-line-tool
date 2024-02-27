@@ -11,7 +11,7 @@ until request[0] == '{' do
 end
 
 begin
-    result = JSON.parse(request[0..-2]u
+    result = JSON.parse(request[0..-2]
 rescue JSON::ParserError 
     # apparently, the error is caused by the "meanings" field.
     # "hello" is fine, but "beginning" is not.
