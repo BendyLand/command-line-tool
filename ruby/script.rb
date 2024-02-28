@@ -16,9 +16,30 @@ https://api.dictionaryapi.dev/api/v2/entries/en/hello
 require "net/http"
 require "json"
 
+=begin
+todo: 
+    create a loop which will allow users to view the fields of the result.
+=end
 class Dictionary
+    def choose_data_to_view(data)
+        if data.nil? 
+            return 
+        end
+        fields = ["word", "phonetics", "meanings", "license", "sourceUrls"]
+        puts "Please select which of the fields you would like to see for your word:"
+        for i in 0...fields.length do 
+            puts "#{i+1}.) #{fields[i]}"
+        end
+        begin 
+            choice = gets.chomp.to_i - 1
+            data[fields[choice]]
+        rescue
+            puts "Invalid option"
+        end
+    end
+
     def enter_word()
-        puts "Please enter a word: "
+        puts "To get started, please enter a word: "
         word = gets.chomp
         unless word.nil?
             word
@@ -44,14 +65,16 @@ class Dictionary
             result[0]
         rescue
             puts "Error: Could not parse word data"
-            {}
         end
     end
 end
 
 dict = Dictionary.new
+
+puts "Welcome to the Dictionary CLI!"
 word = dict.enter_word()
 data = dict.get_word_data(word)
-result = dict.parse_word_data(data)
+parsed_data = dict.parse_word_data(data)
+result = dict.choose_data_to_view(parsed_data)
 
 puts result
