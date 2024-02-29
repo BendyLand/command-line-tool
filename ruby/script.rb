@@ -15,7 +15,6 @@ https://api.dictionaryapi.dev/api/v2/entries/en/hello
 
 require "net/http"
 require "json"
-require "pp"
 
 class Dictionary
     def choose_data_to_view(data)
@@ -77,7 +76,12 @@ result = dict.choose_data_to_view(parsed_data)
 
 result_string = JSON.pretty_generate(result)
 
-File.open("word_data.txt", "w") do |file| 
-    file.write("Retrieved data for '#{word}':\n")
-    file.write(result_string) 
+unless result_string == "null"
+    File.open("word_data.txt", "w") do |file| 
+        file.write("Retrieved data for '#{word}':\n")
+        file.write(result_string) 
+    end
+else
+    puts "Failed to retrieve data for '#{word}'. File will not change."
 end
+
