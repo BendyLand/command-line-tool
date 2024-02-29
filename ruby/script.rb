@@ -15,23 +15,21 @@ https://api.dictionaryapi.dev/api/v2/entries/en/hello
 
 require "net/http"
 require "json"
+require "pp"
 
-=begin
-todo: 
-    create a loop which will allow users to view the fields of the result.
-=end
 class Dictionary
     def choose_data_to_view(data)
         if data.nil? 
             return 
         end
         fields = ["word", "phonetics", "meanings", "license", "sourceUrls"]
-        puts "Please select which of the fields you would like to see for your word:"
+        puts "Please select which field you would like to know about:"
         for i in 0...fields.length do 
             puts "#{i+1}.) #{fields[i]}"
         end
         begin 
             choice = gets.chomp.to_i - 1
+            puts "Writing #{fields[choice]} for '#{data['word']}' to file: 'word_data.txt'"
             data[fields[choice]]
         rescue
             puts "Invalid option"
@@ -71,10 +69,15 @@ end
 
 dict = Dictionary.new
 
-puts "Welcome to the Dictionary CLI!"
+puts "Welcome to the Dictionary CLI, where you can get relevant information about a word of your choice!"
 word = dict.enter_word()
 data = dict.get_word_data(word)
 parsed_data = dict.parse_word_data(data)
 result = dict.choose_data_to_view(parsed_data)
 
-puts result
+result_string = JSON.pretty_generate(result)
+
+File.open("word_data.txt", "w") do |file| 
+    file.write("Retrieved data for '#{word}':\n")
+    file.write(result_string) 
+end
