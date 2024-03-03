@@ -27,7 +27,7 @@ class Dictionary
             puts "#{i+1}.) #{fields[i]}"
         end
         begin 
-            choice = gets.chomp.to_i - 1
+            choice = gets.chomp.to_i % 5 - 1
             puts "Writing #{fields[choice]} for '#{data['word']}' to file: 'word_data.txt'"
             data[fields[choice]]
         rescue
@@ -68,7 +68,7 @@ end
 
 dict = Dictionary.new
 
-puts "Welcome to the Dictionary CLI, where you can get relevant information about a word of your choice!"
+puts "Welcome to my Dictionary Lookup Tool, where you can get relevant information about a word of your choice!"
 word = dict.enter_word()
 data = dict.get_word_data(word)
 parsed_data = dict.parse_word_data(data)
