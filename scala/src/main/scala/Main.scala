@@ -1,5 +1,8 @@
-@main def hello(): Unit =
-  println("Hello world!")
-  println(msg)
+import bland.notebook.*
 
-def msg = "I was compiled by Scala 3. :)"
+@main def run() = 
+    val nb = Notebook()
+    nb.createNote("This is a test note")
+    nb.displayNotes
+
+

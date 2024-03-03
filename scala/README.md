@@ -1,8 +1,6 @@
-## sbt project compiled with Scala 3
+# Scala Note Taking App
 
-### Usage
+The purpose of this project is to practice writing command line apps of various forms. I chose Scala for this version of the project because it is my language of choice, and should still be relatively forgiving for this size of project. 
 
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
 
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+
