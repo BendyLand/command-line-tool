@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="DateTime.fs" />
+    <Compile Include="Utils.fs" />
+    <Compile Include="QueryDetails.fs" />
+    <Compile Include="MessageDetails.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
