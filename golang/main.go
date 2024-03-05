@@ -9,20 +9,49 @@ import (
 
 func main() {
 	fmt.Println("Welcome to the Go Todo List!")
-	input := getInput()
-
+    
 	var tasks []string
+    Loop: for {
+        input := getInput()
+        switch input {
+        case "add":
+            addTask(&tasks)
+        case "view":
+            viewTasks(tasks)
+        case "exit":
+            break Loop
+        case "delete":
+            deleteTask(&tasks)
+        case "panic":
+            fmt.Println("Panicking...")
+            os.Exit(1)
+        default:
+            fmt.Println("Invalid command")
+        }
+    }
+	viewTasks(tasks)
+}
 
-	switch input {
-	case "add":
-		addTask(&tasks)
-	default:
-		fmt.Println("Invalid command")
-		os.Exit(1)
-	}
-	for i, item := range tasks {
-		fmt.Printf("Item %d.) %s\n", i+1, item)
-	}
+func deleteTask(tasks *[]string) {
+    var n int
+    fmt.Println("Which task would you like to delete?")
+    viewTasks(*tasks)
+    fmt.Scan(&n)
+    n-- // for indexing
+    var newTaskList []string
+    for i, task := range *tasks {
+        if i == n {
+            continue
+        }
+        newTaskList = append(newTaskList, task)
+    }
+    *tasks = newTaskList
+}
+
+func viewTasks(tasks []string) {
+    for i, task := range tasks {
+        fmt.Printf("Item %d.) %s\n", i+1, task)
+    }
 }
 
 func addTask(tasks *[]string) {
