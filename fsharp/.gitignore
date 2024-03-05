@@ -1,0 +1,5 @@
+# Ionide specific
+.fake
+
+# Misc
+notes.md

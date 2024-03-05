@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/benlandrette/ccode/storage/multi-language-practice/command-line-tool/fsharp/fsharp.fsproj": {}
+    "/Users/benlandrette/ccode/multi-language-practice/command-line-tool/fsharp/fsharp.fsproj": {}
   },
   "projects": {
-    "/Users/benlandrette/ccode/storage/multi-language-practice/command-line-tool/fsharp/fsharp.fsproj": {
+    "/Users/benlandrette/ccode/multi-language-practice/command-line-tool/fsharp/fsharp.fsproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/benlandrette/ccode/storage/multi-language-practice/command-line-tool/fsharp/fsharp.fsproj",
+        "projectUniqueName": "/Users/benlandrette/ccode/multi-language-practice/command-line-tool/fsharp/fsharp.fsproj",
         "projectName": "fsharp",
-        "projectPath": "/Users/benlandrette/ccode/storage/multi-language-practice/command-line-tool/fsharp/fsharp.fsproj",
+        "projectPath": "/Users/benlandrette/ccode/multi-language-practice/command-line-tool/fsharp/fsharp.fsproj",
         "packagesPath": "/Users/benlandrette/.nuget/packages/",
-        "outputPath": "/Users/benlandrette/ccode/storage/multi-language-practice/command-line-tool/fsharp/obj/",
+        "outputPath": "/Users/benlandrette/ccode/multi-language-practice/command-line-tool/fsharp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/benlandrette/.nuget/NuGet/NuGet.Config"
