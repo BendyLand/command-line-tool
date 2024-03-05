@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+    "bufio"
+    "strings"
 )
 
 func main() {
@@ -13,9 +15,11 @@ func main() {
 
 	switch input {
 	case "add":
-        var newTask string
+        scanner := bufio.NewScanner(os.Stdin)
 		fmt.Println("Please enter the task you would like to add: ")
-        fmt.Scanln(&newTask)
+        scanner.Scan()
+        newTask := scanner.Text()
+        newTask = strings.TrimSpace(newTask)
         addTask(&tasks, newTask)
 	default:
 		fmt.Println("Invalid command")
