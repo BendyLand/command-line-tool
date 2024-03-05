@@ -15,12 +15,7 @@ func main() {
 
 	switch input {
 	case "add":
-		scanner := bufio.NewScanner(os.Stdin)
-		fmt.Println("Please enter the task you would like to add: ")
-		scanner.Scan()
-		newTask := scanner.Text()
-		newTask = strings.TrimSpace(newTask)
-		addTask(&tasks, newTask)
+		addTask(&tasks)
 	default:
 		fmt.Println("Invalid command")
 		os.Exit(1)
@@ -30,8 +25,13 @@ func main() {
 	}
 }
 
-func addTask(tasks *[]string, task string) {
-	*tasks = append(*tasks, task)
+func addTask(tasks *[]string) {
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Println("Please enter the task you would like to add: ")
+	scanner.Scan()
+	newTask := scanner.Text()
+	newTask = strings.TrimSpace(newTask)
+	*tasks = append(*tasks, newTask)
 }
 
 func getInput() string {
