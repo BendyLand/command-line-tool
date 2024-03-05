@@ -16,7 +16,9 @@ Each tool will be implemented in a different language, and each language be will
 - F#
     - For a more functional approach.
 - Rust
-    - To practice writing with performance as a priority.
+    - To practice writing with performance more as a priority.
+- (Bonus): Go
+    - I generally avoid using Go because of previous frustration I experienced with its toolchain, but I was getting bored of the same other languages, so I figured I would give it another try. The difficulty of this project is notably lower than the rest of the ones in this directory.
 
 
 ## Objectives
