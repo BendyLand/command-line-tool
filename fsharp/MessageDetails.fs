@@ -1,6 +1,5 @@
 module MessageDetails
 
-open System
 open Utils
 
 type MessageType = 
@@ -16,13 +15,11 @@ type MessageOrigin =
 
 let chooseRandomMessageType () = 
     let options = [|INFO; ERROR; WARN|]
-    let num = randomNumUnder 3
-    options[num]
+    sample options
 
 let chooseRandomMessageOrigin () = 
     let options = [|UserManagementService; Database; Security; SystemMonitor|]
-    let num = randomNumUnder 4
-    options[num]
+    sample options
 
 let constructMessage () = 
     let messageType = chooseRandomMessageType()

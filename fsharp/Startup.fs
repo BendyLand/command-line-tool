@@ -21,7 +21,7 @@ let rec init () =
             printfn "(This doesn't do anything yet)"
         | "2" ->
             printfn "Generating a lot of organized data..."
-            let requests = generateRequestList 100000
+            let requests = generateRequestList 10000
             writeRequestsToFile requests
             printfn "Data written to file `sample_requests.txt`"
         | _ -> 

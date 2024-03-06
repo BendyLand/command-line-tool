@@ -16,11 +16,24 @@ _*)
 let writeRequestsToFile requestList = 
     File.AppendAllLines("sample_requests.txt", requestList)
 
+
+/// <summary>Returns a random integer up to the specified number (exclusive).</summary>
+/// <param name="top">The exclusive upper bound for the number generation.</param>
 let randomNumUnder top = 
     let rnd = Random()
     rnd.Next(top)
 
+/// <summary>Returns a random integer between the specified lower and upper bounds.</summary>
+/// <param name="bottom">The inclusive lower bound to be used in the random number generation range.</param>
+/// <param name="top">The exclusive upper bound to be used in the random number generation range.</param>
 let randomNumBetween bottom top = 
     let rnd = Random()
     rnd.Next(bottom, top)
 
+/// <summary>Returns a random item from the provided collection.</summary>
+/// <param name="coll">Collection from which to take a random element from.</param>
+let sample coll = 
+    let randomNum = randomNumUnder (Seq.length coll)
+    Seq.item randomNum coll
+
+    
