@@ -1,9 +1,12 @@
-﻿open MyDateTime
-open Utils
-open MessageDetails
-open QueryDetails
+﻿open Utils
 
-greet()
+(*  
+    Welcome to the Random Log Generator CLI!
 
-let requests = generateRequestList 100
-writeRequestsToFile requests
+    Please select which type of data you want:
+
+        1.) Some jumbled data
+        2.) A lot of organized data
+_*)
+
+greetLoop()

@@ -10,26 +10,6 @@ open MyDateTime
 - 2/5 include a mock username
 _*)
 
-let greet() = 
-    printfn """
-    Welcome to the Random Log Generator CLI!
-
-    Please select which type of data you want:
-
-        1.) Some jumbled data
-        2.) A lot of organized data
-    """
-
-let generateData input =
-    match input with
-    | "1" -> printfn $"Generating some jumbled data..."
-    | "2" -> printfn $"Generating a lot of organized data..."
-    | _ -> printfn $"Invalid input"
-
-// [client_ip] [timestamp] "GET /api/users HTTP/1.1" [status_code] [response_size]
-// [client_ip] [timestamp] "POST /api/users HTTP/1.1" [status_code] [response_size]
-// [client_ip] [timestamp] "PUT /api/users/123 HTTP/1.1" [status_code] [response_size]
-// [client_ip] [timestamp] "DELETE /api/users/123 HTTP/1.1" [status_code] [response_size]
 
 // 127.0.0.1 - - [05/Mar/2024:12:30:45 +0000] "GET /index.html HTTP/1.1" 200 1234
 // 2024-03-05T12:35:17 ERROR [UserManagementService] Error processing user registration request: User email already exists
@@ -44,10 +24,35 @@ let constructHttpRequest() =
     let timestamp = generateHttpStyleDate dateComponents
     let ip = generateRandomIp()
     let responseSize = Random().Next(800, 1601)
-    $"%s{ip} %s{timestamp} \"%A{requestType} %s{path}\" 200 %d{responseSize}"
+    $"%s{ip} - - %s{timestamp} \"%A{requestType} %s{path}\" 200 %d{responseSize}"
 
 let generateRequestList count = 
     [|for _ in 0..count -> constructHttpRequest()|]
 
 let writeRequestsToFile requestList = 
     File.AppendAllLines("sample_requests.txt", requestList)
+
+let rec greetLoop () = 
+    printfn """
+    Welcome to the Random Log Generator CLI!
+
+    Please select which type of data you want:
+
+        1.) Some jumbled data
+        2.) A lot of organized data
+    """
+    let rec loop () = 
+        let input = Console.ReadLine()
+        match input with
+        | "1" -> 
+            printfn "Generating some jumbled data..."
+            printfn "(This doesn't do anything yet)"
+        | "2" ->
+            printfn "Generating a lot of organized data..."
+            let requests = generateRequestList 10000
+            writeRequestsToFile requests
+            printfn "Data written to file `sample_requests.txt`"
+        | _ -> 
+            printfn "Invalid input. Please enter '1' or '2'"
+            loop()
+    loop()
