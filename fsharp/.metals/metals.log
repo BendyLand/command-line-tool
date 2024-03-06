@@ -265,3 +265,6 @@ Caused by: scala.meta.internal.metals.debug.BuildTargetNotFoundForPathException:
 	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleRequest(RemoteEndpoint.java:261)
 	... 9 more
 
+2024.03.05 21:45:21 INFO  Shutting down server
+2024.03.05 21:45:21 INFO  shutting down Metals
+2024.03.05 21:45:21 INFO  Exiting server
