@@ -7,7 +7,36 @@
 
 - 4/5 include a message type, plus the origin of the log in square brackets
 - 4/5 include a message explaining the log
-*)
+_*)
 
 module MessageDetails
 
+open System
+
+type MessageType = 
+    | ERROR
+    | INFO
+    | WARN
+
+type MessageOrigin = 
+    | UserManagementService
+    | Database
+    | Security
+    | SystemMonitor
+
+let chooseRandomMessageType = 
+    let rnd = Random()
+    let num = rnd.Next(3)
+    match num with
+        | 0 -> INFO
+        | 1 -> ERROR
+        | _ -> WARN
+
+let chooseRandomMessageOrigin = 
+    let rnd = Random()
+    let num = rnd.Next(4)
+    match num with
+        | 0 -> UserManagementService
+        | 1 -> Database
+        | 2 -> Security
+        | _ -> SystemMonitor

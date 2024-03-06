@@ -11,7 +11,7 @@ open System
 
 √- All include a date. 4/5 are located at the front in the format YYYY-MM-DDThh:mm:ss. 
     - One is in square brackets using [DD/Mon/YYYY:hh:mm:ss +0000] (timezone offset).
-*)
+_*)
 
 type MyDateTime = 
     {
