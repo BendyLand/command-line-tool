@@ -10,8 +10,7 @@ open MyDateTime
 - 2/5 include a mock username
 _*)
 
-
-// 127.0.0.1 - - [05/Mar/2024:12:30:45 +0000] "GET /index.html HTTP/1.1" 200 1234
+//√ 127.0.0.1 - - [05/Mar/2024:12:30:45 +0000] "GET /index.html HTTP/1.1" 200 1234
 // 2024-03-05T12:35:17 ERROR [UserManagementService] Error processing user registration request: User email already exists
 // 2024-03-05T12:40:22 INFO [Database] Executing SQL query: SELECT * FROM users WHERE username='john_doe'
 // 2024-03-05T12:45:55 WARN [Security] Suspicious login attempt detected: IP address 192.168.1.100, username 'admin'
@@ -32,7 +31,7 @@ let generateRequestList count =
 let writeRequestsToFile requestList = 
     File.AppendAllLines("sample_requests.txt", requestList)
 
-let rec greetLoop () = 
+let rec init () = 
     printfn """
     Welcome to the Random Log Generator CLI!
 

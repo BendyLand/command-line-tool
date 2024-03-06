@@ -8,9 +8,6 @@ open System
 2024-03-05T12:40:22 INFO [Database] Executing SQL query: SELECT * FROM users WHERE username='john_doe'
 2024-03-05T12:45:55 WARN [Security] Suspicious login attempt detected: IP address 192.168.1.100, username 'admin'
 2024-03-05T12:50:10 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
-
-√- All include a date. 4/5 are located at the front in the format YYYY-MM-DDThh:mm:ss. 
-    - One is in square brackets using [DD/Mon/YYYY:hh:mm:ss +0000] (timezone offset).
 _*)
 
 type MyDateTime = 
@@ -64,9 +61,7 @@ let generateDefaultDate (dateTime : MyDateTime) =
     let {Year=year; Month=month; Day=day; Hour=hour; Minute=minute; Second=second} = dateTime
     $"%s{year}-%s{month}-%s{day}T%s{hour}:%s{minute}:%s{second}"
 
-// [05/Mar/2024:12:30:45 +0000]
 let generateHttpStyleDate (dateTime : MyDateTime)= 
     let {Year=year; Month=m; Day=day; Hour=hour; Minute=minute; Second=second} = dateTime
     let month = convertMonthStyle m
     $"[%s{day}/%s{month}/%s{year}:%s{hour}:%s{minute}:%s{second} +0000]"
-
