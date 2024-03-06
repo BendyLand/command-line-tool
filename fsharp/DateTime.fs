@@ -1,6 +1,6 @@
 module MyDateTime
 
-open System
+open Utils
 
 (*  
 127.0.0.1 - - [05/Mar/2024:12:30:45 +0000] "GET /index.html HTTP/1.1" 200 1234
@@ -20,17 +20,20 @@ type MyDateTime =
         Second : string
     }
 
-let createRecord (year::month::day::hour::minute::second::[]) =
-    { Year = year; Month = month; Day = day; Hour = hour; Minute = minute; Second = second }
+let createRecord lst =
+    match lst with
+    | year :: month :: day :: hour :: minute :: second :: [] -> 
+        { Year = year; Month = month; Day = day; Hour = hour; Minute = minute; Second = second }
+    | _ -> 
+        { Year = "2000"; Month = "Jan"; Day = "01"; Hour = "01"; Minute = "00"; Second = "00"}
 
 let generateDateComponents() =
-    let rnd = Random()
-    let year = rnd.Next(1970, 2025)
-    let month = rnd.Next(1, 13)
-    let day = rnd.Next(1, 31)
-    let hour = rnd.Next(1, 13)
-    let minute = rnd.Next(1, 60)
-    let second = rnd.Next(60)
+    let year = randomNumBetween 1970 2025
+    let month = randomNumBetween 1 13
+    let day = randomNumBetween 1 31
+    let hour = randomNumBetween 1 13
+    let minute = randomNumUnder 60
+    let second = randomNumUnder 60
     let elements = [year; month; day; hour; minute; second] |> List.map string
     let newElements = 
         elements
@@ -57,7 +60,7 @@ let convertMonthStyle monthNum =
         | "11" -> "Nov"
         | _ -> "Dec"
 
-let generateDefaultDate (dateTime : MyDateTime) = 
+let generateDefaultStyleDate (dateTime : MyDateTime) = 
     let {Year=year; Month=month; Day=day; Hour=hour; Minute=minute; Second=second} = dateTime
     $"%s{year}-%s{month}-%s{day}T%s{hour}:%s{minute}:%s{second}"
 
