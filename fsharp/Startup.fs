@@ -3,6 +3,15 @@ module Startup
 open System
 open Utils
 open RequestDetails
+open MessageDetails
+
+let generateRequestList count = 
+    [|for _ in 0..count -> 
+        let num = randomNumUnder 4
+        match num with
+        | 0 -> constructHttpRequest ()
+        | _ -> constructMessage ()
+    |]
 
 let rec init () = 
     printfn """

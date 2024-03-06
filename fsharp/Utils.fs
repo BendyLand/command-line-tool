@@ -37,3 +37,15 @@ let sample coll =
     Seq.item randomNum coll
 
     
+let generateRandomIp () = 
+    let nums = seq {for _ in 0..3 -> randomNumUnder 256} |> Seq.toList
+    nums 
+    |> List.map string
+    |> String.concat "."
+
+let generateRandomSqlQuery queryType = 
+    match queryType with
+    | "INSERT" -> "INSERT INTO table_name (col1, col2) VALUES (val1, val2)"
+    | "UPDATE" -> "UPDATE table_name SET col1 = val1 WHERE col2 IS NOT NULL"
+    | "DELETE" -> "DELETE FROM table_name WHERE col2 IS NULL"
+    | _ -> "SELECT col1, col2 FROM table_name WHERE col2 IS NOT NULL"
