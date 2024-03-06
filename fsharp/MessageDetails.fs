@@ -1,6 +1,7 @@
 module MessageDetails
 
 open System
+open Utils
 
 type MessageType = 
     | ERROR
@@ -13,12 +14,22 @@ type MessageOrigin =
     | Security
     | SystemMonitor
 
-let chooseRandomMessageType() = 
+let chooseRandomMessageType () = 
     let options = [|INFO; ERROR; WARN|]
-    let num = Random().Next(3)
+    let num = randomNumUnder 3
     options[num]
 
-let chooseRandomMessageOrigin() = 
+let chooseRandomMessageOrigin () = 
     let options = [|UserManagementService; Database; Security; SystemMonitor|]
-    let num = Random().Next(4)
+    let num = randomNumUnder 4
     options[num]
+
+let constructMessage () = 
+    let messageType = chooseRandomMessageType()
+    let message = 
+        match messageType with
+        | ERROR -> "Error message"
+        | INFO -> "Info message"
+        | WARN -> "Warning message"
+    let origin = chooseRandomMessageOrigin()
+    $"[%A{origin}] %s{message}"

@@ -10,22 +10,11 @@
 - 1/5 includes a SQL query
 _*) 
 
-module QueryDetails
+module RequestDetails
 
 open System
-
-// "GET /api/users HTTP/1.1" 
-// "POST /api/users HTTP/1.1" 
-// "PUT /api/users/123 HTTP/1.1" 
-// "DELETE /api/users/123 HTTP/1.1" 
-
-(*  
-[timestamp] represents the time at which the request was made.
-[client_ip] represents the IP address of the client making the request.
-The request line itself is logged in double quotes, including the HTTP method, the resource path, and the HTTP version.
-[status_code] represents the HTTP status code returned by the server.
-[response_size] represents the size of the response sent back to the client.
-_*)
+open Utils
+open MyDateTime
 
 type RequestType = 
     | GET
@@ -33,15 +22,25 @@ type RequestType =
     | PUT
     | DELETE
 
-let generateRandomIp() = 
-    let rnd = Random()
-    let nums = seq {for _ in 0..3 -> rnd.Next(256)} |> Seq.toList
+let generateRandomIp () = 
+    let nums = seq {for _ in 0..3 -> randomNumUnder 256} |> Seq.toList
     nums 
     |> List.map string
     |> String.concat "."
 
-let chooseRandomRequestType() = 
+let chooseRandomRequestType () = 
     let options = [|GET; POST; PUT; DELETE|]
-    let num = Random().Next(4)
+    let num = randomNumUnder 4
     options[num]
 
+let constructHttpRequest () = 
+    let requestType = chooseRandomRequestType()
+    let path = "/index.html HTTP/1.1"
+    let dateComponents = generateDateComponents()
+    let timestamp = generateHttpStyleDate dateComponents
+    let ip = generateRandomIp()
+    let responseSize = Random().Next(800, 1601)
+    $"%s{ip} - - %s{timestamp} \"%A{requestType} %s{path}\" 200 %d{responseSize}"
+
+let generateRequestList count = 
+    [|for _ in 0..count -> constructHttpRequest()|]
