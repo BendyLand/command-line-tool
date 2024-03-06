@@ -6,7 +6,7 @@ open System.IO
 /// <summary>Writes the contents of the provided collection to `sample_requests.txt`</summary>
 /// <param name="requestList">The collection of elements to be written to the file</param>
 let writeRequestsToFile requestList = 
-    File.AppendAllLines("sample_requests.txt", requestList)
+    File.AppendAllLines("sample_logs.txt", requestList)
 
 /// <summary>Returns a random integer up to the specified number (exclusive).</summary>
 /// <param name="top">The exclusive upper bound for the number generation.</param>

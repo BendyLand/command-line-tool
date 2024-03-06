@@ -26,7 +26,7 @@ let rec init () =
             printfn "Generating data..."
             let requests = generateRequestList num
             writeRequestsToFile requests
-            printfn "Data written to file `sample_requests.txt`"
+            printfn "Data written to file `sample_logs.txt`"
         | _-> 
             printfn "Invalid input. Please enter a number."
             loop()
