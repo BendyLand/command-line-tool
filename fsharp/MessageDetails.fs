@@ -25,9 +25,9 @@ let chooseRandomMessageOrigin () =
 let generateErrorMessage messageOrigin = 
     match messageOrigin with
     | UserManagementService -> "Error processing user registration request: User email already exists"
-    | Database -> "Error executing SQL Query"
-    | Security -> "Permission Denied: You do not have access this content"
-    | SystemMonitor -> "Not enough disk space to perform task"
+    | Database -> "There was a problem executing the SQL Query."
+    | Security -> "Permission Denied: You do not have access to this content."
+    | SystemMonitor -> "Not enough disk space to perform task."
 
 let generateInfoMessage messageOrigin =
     match messageOrigin with
@@ -38,18 +38,18 @@ let generateInfoMessage messageOrigin =
         $"Executing SQL query: %s{query}"
     | Security -> 
         let ip = generateRandomIp()
-        $"Successful login detected: IP address %s{ip}, username 'admin'"
+        $"Successful login: IP address %s{ip}, username 'admin'"
     | SystemMonitor -> "CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%"
 
-// let generateWarnMessage origin =
+let generateWarningMessage origin =
+    match origin with
+    | UserManagementService -> "Password may not contain enough variety. Proceed with caution."
+    | Database -> "SQL query may be missing rows. Please double check your input data."
+    | Security -> 
+        let ip = generateRandomIp()
+        $"Suspicious login attempt detected: IP address %s{ip}, username 'admin'"
+    | SystemMonitor -> "Disk space utilization at 80%. Consider adding more storage or removing unneeded files."
 
-
-(*  
-2024-03-05T12:35:17 ERROR [UserManagementService] Error processing user registration request: User email already exists
-2024-03-05T12:40:22 INFO [Database] Executing SQL query: SELECT * FROM users WHERE username='john_doe'
-2024-03-05T12:45:55 WARN [Security] Suspicious login attempt detected: IP address 192.168.1.100, username 'admin'
-2024-03-05T12:50:10 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
-_*) 
 let constructMessage () = 
     let messageType = chooseRandomMessageType()
     let dateComponents = generateDateComponents()
@@ -59,5 +59,5 @@ let constructMessage () =
         match messageType with
         | ERROR -> generateErrorMessage origin
         | INFO -> generateInfoMessage origin
-        | WARN -> "Warning message"
+        | WARN -> generateWarningMessage origin
     $"%s{timestamp} %A{messageType} [%A{origin}] %s{message}"

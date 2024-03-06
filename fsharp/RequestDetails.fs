@@ -3,7 +3,6 @@ module RequestDetails
 open System
 open Utils
 open MyDateTime
-// open MessageDetails
 
 type RequestType = 
     | GET
@@ -16,7 +15,6 @@ type QueryType =
     | INSERT
     | UPDATE
     | DELETE
-
 
 let chooseRandomRequestType () = 
     let options = [|GET; POST; PUT; RequestType.DELETE|]
@@ -31,9 +29,6 @@ let constructHttpRequest () =
     let responseSize = Random().Next(800, 1601)
     $"%s{ip} - - %s{timestamp} \"%A{requestType} %s{path}\" 200 %d{responseSize}"
 
-
 let chooseRandomMessageOrigin = 
     let options = [|SELECT; INSERT; UPDATE; QueryType.DELETE|]
     sample options
-
-
