@@ -1,6 +1,6 @@
 # Go Log File Generator
 
-# Purpose
+## Purpose
 
 I got the idea for *this* project while implementing my original log file generator in F#. 
 
