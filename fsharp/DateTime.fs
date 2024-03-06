@@ -45,6 +45,29 @@ let generateDateComponents =
         )
     createRecord newElements
 
+let convertMonthStyle monthNum =
+    match monthNum with
+        | "1" -> "Jan"
+        | "2" -> "Feb"
+        | "3" -> "Mar"
+        | "4" -> "Apr"
+        | "5" -> "May"
+        | "6" -> "Jun"
+        | "7" -> "Jul"
+        | "8" -> "Aug"
+        | "9" -> "Sep"
+        | "10" -> "Oct"
+        | "11" -> "Nov"
+        | _ -> "Dec"
+
 let generateDefaultDate (dateTime : MyDateTime) = 
     let {Year=year; Month=month; Day=day; Hour=hour; Minute=minute; Second=second} = dateTime
     $"%s{year}-%s{month}-%s{day}T%s{hour}:%s{minute}:%s{second}"
+
+
+// [05/Mar/2024:12:30:45 +0000]
+let generateHttpStyleDate (dateTime : MyDateTime)= 
+    let {Year=year; Month=m; Day=day; Hour=hour; Minute=minute; Second=second} = dateTime
+    let month = convertMonthStyle m
+    $"[%s{day}/%s{month}/%s{year}:%s{hour}:%s{minute}:%s{second} +0000]"
+

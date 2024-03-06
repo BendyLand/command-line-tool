@@ -1,5 +1,4 @@
-﻿open System
-open MyDateTime
+﻿open MyDateTime
 open Utils
 open MessageDetails
 open QueryDetails
@@ -8,13 +7,16 @@ greet
 
 let components = generateDateComponents
 let date = generateDefaultDate components
-printfn $"%A{date}"
+// printfn $"%A{date}"
 
 let messageType = chooseRandomMessageType
-printfn $"%A{messageType}"
+// printfn $"%A{messageType}"
 
 let randomIp = generateRandomIp
-printfn $"%s{randomIp}"
+// printfn $"%s{randomIp}"
 
 let messageOrigin = chooseRandomMessageOrigin
-printfn $"%A{messageOrigin}"
+// printfn $"%A{messageOrigin}"
+
+let httpRequest = constructHttpRequest
+printfn $"%s{httpRequest}"

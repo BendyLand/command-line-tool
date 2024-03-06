@@ -25,18 +25,11 @@ type MessageOrigin =
     | SystemMonitor
 
 let chooseRandomMessageType = 
-    let rnd = Random()
-    let num = rnd.Next(3)
-    match num with
-        | 0 -> INFO
-        | 1 -> ERROR
-        | _ -> WARN
+    let options = [|INFO; ERROR; WARN|]
+    let num = Random().Next(3)
+    options[num]
 
 let chooseRandomMessageOrigin = 
-    let rnd = Random()
-    let num = rnd.Next(4)
-    match num with
-        | 0 -> UserManagementService
-        | 1 -> Database
-        | 2 -> Security
-        | _ -> SystemMonitor
+    let options = [|UserManagementService; Database; Security; SystemMonitor|]
+    let num = Random().Next(4)
+    options[num]

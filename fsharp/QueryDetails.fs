@@ -27,10 +27,21 @@ The request line itself is logged in double quotes, including the HTTP method, t
 [response_size] represents the size of the response sent back to the client.
 _*)
 
+type RequestType = 
+    | GET
+    | POST
+    | PUT
+    | DELETE
+
 let generateRandomIp = 
     let rnd = Random()
     let nums = seq {for _ in 0..3 -> rnd.Next(256)} |> Seq.toList
     nums 
     |> List.map string
     |> String.concat "."
+
+let chooseRandomRequestType = 
+    let options = [|GET; POST; PUT; DELETE|]
+    let num = Random().Next(4)
+    options[num]
 
