@@ -3,20 +3,7 @@ open Utils
 open MessageDetails
 open QueryDetails
 
-greet
+greet()
 
-let components = generateDateComponents
-let date = generateDefaultDate components
-// printfn $"%A{date}"
-
-let messageType = chooseRandomMessageType
-// printfn $"%A{messageType}"
-
-let randomIp = generateRandomIp
-// printfn $"%s{randomIp}"
-
-let messageOrigin = chooseRandomMessageOrigin
-// printfn $"%A{messageOrigin}"
-
-let httpRequest = constructHttpRequest
-printfn $"%s{httpRequest}"
+let requests = generateRequestList 100
+writeRequestsToFile requests

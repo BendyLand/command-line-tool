@@ -24,12 +24,12 @@ type MessageOrigin =
     | Security
     | SystemMonitor
 
-let chooseRandomMessageType = 
+let chooseRandomMessageType() = 
     let options = [|INFO; ERROR; WARN|]
     let num = Random().Next(3)
     options[num]
 
-let chooseRandomMessageOrigin = 
+let chooseRandomMessageOrigin() = 
     let options = [|UserManagementService; Database; Security; SystemMonitor|]
     let num = Random().Next(4)
     options[num]

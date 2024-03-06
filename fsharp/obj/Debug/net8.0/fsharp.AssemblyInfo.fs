@@ -10,7 +10,7 @@ open System.Reflection
 [<assembly: System.Reflection.AssemblyCompanyAttribute("fsharp")>]
 [<assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")>]
 [<assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")>]
-[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a7303f124373e85c0fcb7d6180ead836560965a3")>]
+[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8b124893cf38e63339bd1c6eb1417fe923184e0")>]
 [<assembly: System.Reflection.AssemblyProductAttribute("fsharp")>]
 [<assembly: System.Reflection.AssemblyTitleAttribute("fsharp")>]
 [<assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")>]

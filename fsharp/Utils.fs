@@ -1,6 +1,7 @@
 module Utils
 
 open System
+open System.IO
 open QueryDetails
 open MyDateTime
 
@@ -9,7 +10,7 @@ open MyDateTime
 - 2/5 include a mock username
 _*)
 
-let greet = 
+let greet() = 
     printfn """
     Welcome to the Random Log Generator CLI!
 
@@ -36,11 +37,17 @@ let generateData input =
 // 2024-03-05T12:45:55 WARN [Security] Suspicious login attempt detected: IP address 192.168.1.100, username 'admin'
 // 2024-03-05T12:50:10 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
 
-let constructHttpRequest = 
-    let requestType = chooseRandomRequestType
+let constructHttpRequest() = 
+    let requestType = chooseRandomRequestType()
     let path = "/index.html HTTP/1.1"
-    let dateComponents = generateDateComponents
+    let dateComponents = generateDateComponents()
     let timestamp = generateHttpStyleDate dateComponents
-    let ip = generateRandomIp
+    let ip = generateRandomIp()
     let responseSize = Random().Next(800, 1601)
     $"%s{ip} %s{timestamp} \"%A{requestType} %s{path}\" 200 %d{responseSize}"
+
+let generateRequestList count = 
+    [|for _ in 0..count -> constructHttpRequest()|]
+
+let writeRequestsToFile requestList = 
+    File.AppendAllLines("sample_requests.txt", requestList)

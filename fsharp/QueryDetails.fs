@@ -33,14 +33,14 @@ type RequestType =
     | PUT
     | DELETE
 
-let generateRandomIp = 
+let generateRandomIp() = 
     let rnd = Random()
     let nums = seq {for _ in 0..3 -> rnd.Next(256)} |> Seq.toList
     nums 
     |> List.map string
     |> String.concat "."
 
-let chooseRandomRequestType = 
+let chooseRandomRequestType() = 
     let options = [|GET; POST; PUT; DELETE|]
     let num = Random().Next(4)
     options[num]
