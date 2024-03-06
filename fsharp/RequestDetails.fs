@@ -1,15 +1,9 @@
-(*  
-2024-03-05T12:35:17 ERROR [UserManagementService] Error processing user registration request: User email already exists
-2024-03-05T12:40:22 INFO [Database] Executing SQL query: SELECT * FROM users WHERE username='john_doe'
-2024-03-05T12:45:55 WARN [Security] Suspicious login attempt detected: IP address 192.168.1.100, username 'admin'
-2024-03-05T12:50:10 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
-_*) 
-
 module RequestDetails
 
 open System
 open Utils
 open MyDateTime
+open MessageDetails
 
 type RequestType = 
     | GET
@@ -43,7 +37,12 @@ let constructHttpRequest () =
     $"%s{ip} - - %s{timestamp} \"%A{requestType} %s{path}\" 200 %d{responseSize}"
 
 let generateRequestList count = 
-    [|for _ in 0..count -> constructHttpRequest()|]
+    [|for _ in 0..count -> 
+        let num = randomNumUnder 4
+        match num with
+        | 0 -> constructHttpRequest()
+        | _ -> constructMessage ()
+    |]
 
 let generateRandomSqlQuery () = 
     let options = [|SELECT; INSERT; UPDATE; QueryType.DELETE|]
