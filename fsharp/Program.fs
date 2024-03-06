@@ -5,12 +5,9 @@ init() prints:
 
     Welcome to the Random Log Generator CLI!
 
-    Please select which type of data you want:
+    Please enter the amount of random log files to generate:
 
-        1.) Some jumbled data
-        2.) A lot of organized data
-
-then waits for input
+then waits for a number as input.
 _*)
 
 init()
