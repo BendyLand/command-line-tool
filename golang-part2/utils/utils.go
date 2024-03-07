@@ -14,11 +14,11 @@ import (
 247.102.65.159.61 - - [30/Sep/2022:09:38:29 +0000] "POST /index.html HTTP/1.1" 200 1301
 */
 
-func CreateRequestDateTime(date, time string) string {
+func ConstructRequestDateTime(date, time string) string {
 	return "[" + date + ":" + time + " +0000]"
 }
 
-func CreateStandardDateTime(date, time string) string {
+func ConstructStandardDateTime(date, time string) string {
 	components := []string{date, time}
 	return strings.Join(components, "T")
 }
