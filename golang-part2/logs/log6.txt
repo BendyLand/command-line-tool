@@ -1,0 +1,100 @@
+1982-04-26T10:33:26 WARN [UserManagementService] Password may not contain enough variety. Proceed with caution.
+1975-02-02T05:04:45 WARN [UserManagementService] Password may not contain enough variety. Proceed with caution.
+1971-08-08T11:12:34 WARN [SystemMonitor] Disk space utilization at 80%. Consider adding more storage or removing unneeded files.
+2008-01-24T08:14:58 WARN [Security] Suspicious login attempt detected: IP address 86.149.44.37.4, username 'admin'
+1972-07-24T06:33:52 INFO [Security] Successful login: IP address 8.126.247.100.141, username 'admin'
+2004-01-17T10:39:37 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
+2010-07-21T07:52:10 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+1985-07-15T12:42:01 ERROR [UserManagementService] Error processing user registration request: User email already exists.
+1973-07-13T01:22:47 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+2009-04-19T07:56:50 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+2016-12-03T10:17:54 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+1983-10-01T01:40:23 INFO [UserManagementService] Successfully created user account!
+2005-09-07T08:53:40 ERROR [Security] Permission Denied: You do not have access to this content.
+1976-09-13T06:39:24 ERROR [SystemMonitor] Not enough disk space to perform task.
+2012-05-27T03:05:22 ERROR [UserManagementService] Error processing user registration request: User email already exists.
+1983-06-07T06:03:21 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+1996-07-20T08:32:44 WARN [Security] Suspicious login attempt detected: IP address 254.179.221.180.23, username 'admin'
+1998-06-30T02:22:56 ERROR [Database] There was a problem executing the SQL Query.
+1974-06-23T01:46:48 WARN [Security] Suspicious login attempt detected: IP address 103.203.115.143.53, username 'admin'
+2018-03-31T06:02:34 WARN [Security] Suspicious login attempt detected: IP address 105.28.147.26.32, username 'admin'
+2006-01-30T09:37:58 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
+1987-05-21T04:50:55 WARN [Security] Suspicious login attempt detected: IP address 7.235.66.120.71, username 'admin'
+1986-12-29T03:51:56 ERROR [SystemMonitor] Not enough disk space to perform task.
+2022-08-29T10:19:21 INFO [UserManagementService] Successfully created user account!
+1980-05-04T01:41:45 INFO [Security] Successful login: IP address 75.176.209.241.16, username 'admin'
+2000-06-14T06:10:07 ERROR [Security] Permission Denied: You do not have access to this content.
+1994-09-08T03:33:51 INFO [UserManagementService] Successfully created user account!
+2009-09-26T05:34:27 WARN [UserManagementService] Password may not contain enough variety. Proceed with caution.
+1992-01-26T09:26:55 INFO [Security] Successful login: IP address 174.90.137.67.84, username 'admin'
+1975-09-29T07:53:37 WARN [Security] Suspicious login attempt detected: IP address 222.97.250.153.227, username 'admin'
+2012-11-18T04:30:56 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+1994-09-02T05:22:54 INFO [Security] Successful login: IP address 50.24.252.251.41, username 'admin'
+1989-02-15T06:03:45 ERROR [SystemMonitor] Not enough disk space to perform task.
+1977-12-12T03:40:36 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+2005-12-28T11:06:03 WARN [Database] SQL query may be missing rows. Please double check your input data.
+1984-07-28T07:36:22 ERROR [Database] There was a problem executing the SQL Query.
+1985-08-28T10:38:53 WARN [UserManagementService] Password may not contain enough variety. Proceed with caution.
+1975-12-11T01:14:20 INFO [Security] Successful login: IP address 202.236.97.137.13, username 'admin'
+1975-04-25T12:15:41 WARN [SystemMonitor] Disk space utilization at 80%. Consider adding more storage or removing unneeded files.
+1995-03-30T08:03:42 INFO [Security] Successful login: IP address 143.226.111.69.71, username 'admin'
+1974-10-25T07:53:19 WARN [Database] SQL query may be missing rows. Please double check your input data.
+1998-03-08T10:55:38 ERROR [SystemMonitor] Not enough disk space to perform task.
+1978-12-12T06:21:28 ERROR [SystemMonitor] Not enough disk space to perform task.
+2010-12-05T01:56:12 ERROR [SystemMonitor] Not enough disk space to perform task.
+1999-06-13T07:46:59 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
+1971-05-27T12:41:37 ERROR [SystemMonitor] Not enough disk space to perform task.
+1978-12-30T06:25:50 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
+1989-06-29T04:43:34 WARN [Security] Suspicious login attempt detected: IP address 124.67.43.227.127, username 'admin'
+1971-09-26T06:18:55 INFO [UserManagementService] Successfully created user account!
+1988-06-15T05:23:08 ERROR [Security] Permission Denied: You do not have access to this content.
+2013-08-27T02:24:52 WARN [SystemMonitor] Disk space utilization at 80%. Consider adding more storage or removing unneeded files.
+1984-07-03T03:37:48 ERROR [SystemMonitor] Not enough disk space to perform task.
+1984-07-17T12:57:15 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+2006-07-18T04:17:21 INFO [UserManagementService] Successfully created user account!
+1981-08-07T08:53:45 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
+1991-06-28T03:41:37 WARN [Security] Suspicious login attempt detected: IP address 93.84.2.150.46, username 'admin'
+1992-01-17T03:39:54 INFO [UserManagementService] Successfully created user account!
+1996-08-04T11:07:00 ERROR [SystemMonitor] Not enough disk space to perform task.
+1985-07-23T01:45:50 WARN [SystemMonitor] Disk space utilization at 80%. Consider adding more storage or removing unneeded files.
+2011-08-18T01:08:36 ERROR [SystemMonitor] Not enough disk space to perform task.
+2015-10-10T05:15:41 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+1988-03-23T08:45:45 ERROR [Security] Permission Denied: You do not have access to this content.
+2002-12-12T02:27:59 ERROR [UserManagementService] Error processing user registration request: User email already exists.
+1977-05-25T07:34:08 INFO [Security] Successful login: IP address 184.95.36.88.25, username 'admin'
+1987-08-19T08:52:50 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+1975-11-22T10:41:15 WARN [UserManagementService] Password may not contain enough variety. Proceed with caution.
+1975-01-24T08:15:40 INFO [UserManagementService] Successfully created user account!
+1982-11-27T10:29:47 ERROR [Security] Permission Denied: You do not have access to this content.
+2010-07-30T08:20:33 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
+1998-03-06T08:17:15 WARN [Database] SQL query may be missing rows. Please double check your input data.
+2020-12-15T03:04:04 WARN [SystemMonitor] Disk space utilization at 80%. Consider adding more storage or removing unneeded files.
+1974-02-04T09:19:31 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
+1984-05-20T11:26:33 ERROR [Security] Permission Denied: You do not have access to this content.
+1986-11-29T12:02:42 WARN [Security] Suspicious login attempt detected: IP address 246.79.99.101.128, username 'admin'
+1988-10-24T10:26:21 WARN [SystemMonitor] Disk space utilization at 80%. Consider adding more storage or removing unneeded files.
+2000-06-18T03:08:45 WARN [Database] SQL query may be missing rows. Please double check your input data.
+2017-11-04T12:54:57 ERROR [Security] Permission Denied: You do not have access to this content.
+1980-02-04T12:15:28 WARN [SystemMonitor] Disk space utilization at 80%. Consider adding more storage or removing unneeded files.
+1983-03-15T05:09:43 WARN [UserManagementService] Password may not contain enough variety. Proceed with caution.
+2024-01-16T05:46:00 INFO [Database] Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL
+1973-02-16T01:51:07 INFO [UserManagementService] Successfully created user account!
+2022-03-09T07:09:49 ERROR [UserManagementService] Error processing user registration request: User email already exists.
+1976-06-26T07:50:28 WARN [Security] Suspicious login attempt detected: IP address 39.43.151.159.25, username 'admin'
+1996-12-24T01:25:53 ERROR [SystemMonitor] Not enough disk space to perform task.
+1983-10-03T08:37:02 INFO [UserManagementService] Successfully created user account!
+1970-02-25T04:31:53 ERROR [Security] Permission Denied: You do not have access to this content.
+1995-10-21T05:26:41 INFO [Security] Successful login: IP address 80.60.226.27.73, username 'admin'
+2015-10-28T04:27:48 ERROR [SystemMonitor] Not enough disk space to perform task.
+1990-02-27T05:51:35 WARN [Security] Suspicious login attempt detected: IP address 168.191.230.181.201, username 'admin'
+2002-05-31T06:20:56 INFO [Security] Successful login: IP address 127.109.106.212.196, username 'admin'
+1974-07-08T06:11:52 ERROR [Security] Permission Denied: You do not have access to this content.
+1997-06-25T01:55:23 WARN [Database] SQL query may be missing rows. Please double check your input data.
+2010-04-14T03:24:04 WARN [SystemMonitor] Disk space utilization at 80%. Consider adding more storage or removing unneeded files.
+2021-05-26T09:38:17 INFO [UserManagementService] Successfully created user account!
+1993-08-05T01:30:14 INFO [Security] Successful login: IP address 47.89.67.218.66, username 'admin'
+1974-11-19T08:33:43 ERROR [Security] Permission Denied: You do not have access to this content.
+1977-02-12T07:45:34 WARN [UserManagementService] Password may not contain enough variety. Proceed with caution.
+2023-01-21T12:50:44 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
+2020-03-24T04:52:55 ERROR [UserManagementService] Error processing user registration request: User email already exists.
+1976-04-17T02:04:18 ERROR [SystemMonitor] Not enough disk space to perform task.

@@ -4,24 +4,62 @@ import (
 	"fmt"
 	"golang-part2/pkgs/datetime"
 	"golang-part2/pkgs/utils"
+	"os"
 	"strconv"
+	"sync"
 )
 
 func main() {
-	logChan := make(chan string)
-	requestChan := make(chan string)
+	numLogFiles := 10
+	logsPerFile := 100
+	numGoroutines := 10
+	wg := sync.WaitGroup{}
 
-	go GenerateLogMessage(logChan)
-	go GenerateRequestMessage(requestChan)
+	logChan := make(chan string, numGoroutines)
 
-	logMessage := <- logChan
-	requestMessage := <- requestChan
+	for i := 0; i < numGoroutines; i++ {
+		wg.Add(1)
+		go GenerateLogMessages(logChan, logsPerFile, &wg)
+	}
 
-	fmt.Println("Log message: " + logMessage)
-	fmt.Println("Request message: " + requestMessage)
+	WriteMessagesToFile(logChan, numLogFiles, logsPerFile)
+
+	wg.Wait()
 }
 
-// Two functions to call ConstructFullMessage functions and send results to a channel
+func WriteMessagesToFile(logChan chan string, numLogFiles, logsPerFile int) {
+	for i := 0; i < numLogFiles; i++ {
+		filename := fmt.Sprintf("logs/log%d.txt", i+1)
+		file, err := os.Create(filename)
+		if err != nil {
+			fmt.Println("Error creating file:", err)
+			continue
+		}
+		defer file.Close()
+
+		for j := 0; j < logsPerFile; j++ {
+			logMessage := <-logChan
+
+			_, err := file.WriteString(logMessage + "\n")
+			if err != nil {
+				fmt.Println("Error writing to file:", err)
+				continue
+			}
+		}
+		fmt.Println("Log messages written to:", filename)
+	}
+}
+
+// Generates multiple random log messages and sends them to the provided channel
+func GenerateLogMessages(ch chan<- string, logsPerFile int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for i := 0; i < logsPerFile; i++ {
+		logMessage := ConstructFullRandomLogMessage()
+		ch <- logMessage
+	}
+}
+
+// Functions to call the 'ConstructFullMessage' functions and send results to a channel
 func GenerateRequestMessage(ch chan<- string) {
 	ch <- ConstructFullRandomRequestMessage()
 }
