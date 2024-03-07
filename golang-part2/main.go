@@ -14,7 +14,6 @@ func main() {
 func displayAll() {
 	fmt.Println()
 	fmt.Println("Welcome to the Golang Random Log Message Generator!\n")
-	fmt.Println("Random IP address:\t\t\t" + utils.GenerateRandomIp())
 	fmt.Println("Random message type:\t\t\t" + utils.ChooseRandomMessageType())
 	fmt.Println("Random message origin:\t\t\t" + utils.ChooseRandomMessageOrigin())
 	fmt.Println(utils.ConstructFullRandomRequestMessage())

@@ -1,18 +1,64 @@
 package utils
 
 import (
+	"math/rand"
 	"strconv"
 	"strings"
-	"math/rand"
 )
 
-/*  
+/*
 2001-02-13T05:16:14 INFO [Security] Successful login: IP address 137.221.132.152.201, username 'admin'
 1974-01-01T05:34:59 INFO [Database] Executing SQL query: SELECT col1, col2 FROM table_name WHERE col2 IS NOT NULL
 1997-06-11T11:27:18 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
 2010-08-26T02:54:02 ERROR [UserManagementService] Error processing user registration request: User email already exists
-247.102.65.159.61 - - [30/Sep/2022:09:38:29 +0000] "POST /index.html HTTP/1.1" 200 1301
 */
+
+
+
+func ChooseErrorMessageFromOrigin(origin string) string {
+	var message string
+	switch origin {
+	case "[Security]":
+		message = "Permission Denied: You do not have access to this content."
+	case "[Database]":
+		message = "There was a problem executing the SQL Query."
+	case "[SystemMonitor]":
+		message = "Not enough disk space to perform task."
+	case "[UserManagementService]":
+		message = "Error processing user registration request: User email already exists."
+	}
+	return message
+}
+
+func ChooseWarnMessageFromOrigin(origin string) string {
+	var message string
+	switch origin {
+	case "[Security]":
+		message = "Suspicious login attempt detected: IP address 56.75.109.2.235, username 'admin'"
+	case "[Database]":
+		message = "SQL query may be missing rows. Please double check your input data."
+	case "[SystemMonitor]":
+		message = "Suspicious login attempt detected: IP address 56.75.109.2.235, username 'admin'"
+	case "[UserManagementService]":
+		message = "Password may not contain enough variety. Proceed with caution."
+	}
+	return message
+}
+
+func ChooseInfoMessageFromOrigin(origin string) string {
+	var message string
+	switch origin {
+	case "[Security]":
+		message = "Successful login: IP address 190.95.66.237.224, username 'admin'"
+	case "[Database]":
+		message = "Executing SQL query: DELETE FROM table_name WHERE col2 IS NULL"
+	case "[SystemMonitor]":
+		message = "CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%"
+	case "[UserManagementService]":
+		message = "Successfully created user account!"
+	}
+	return message
+}
 
 func ConstructFullRandomRequestMessage() string {
 	ip := GenerateRandomIp()
@@ -79,10 +125,11 @@ func ChooseRandomRequestType() string {
 }
 
 func ChooseRandomQueryType() string {
-	queryTypes := []string{ "SELECT col1, col2 FROM table_name WHERE col2 IS NOT NULL", 
-							"DELETE FROM table_name WHERE col2 IS NULL",
-							"INSERT INTO table_name (col1, col2) VALUES (val1, val2)",
-							"UPDATE table_name SET col1 = val1 WHERE col2 IS NOT NULL" }
+	queryTypes := []string{
+		"SELECT col1, col2 FROM table_name WHERE col2 IS NOT NULL",
+		"DELETE FROM table_name WHERE col2 IS NULL",
+		"INSERT INTO table_name (col1, col2) VALUES (val1, val2)",
+		"UPDATE table_name SET col1 = val1 WHERE col2 IS NOT NULL"}
 	return Sample(queryTypes)
 }
 
