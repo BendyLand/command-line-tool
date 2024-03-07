@@ -14,6 +14,20 @@ import (
 247.102.65.159.61 - - [30/Sep/2022:09:38:29 +0000] "POST /index.html HTTP/1.1" 200 1301
 */
 
+func ConstructFullRandomRequestMessage() string {
+	ip := GenerateRandomIp()
+	dateTime := GenerateRequestStyleRandomDate()
+	request := ConstructHttpRequest()
+	return ip + " - - " + dateTime + " " + request
+}
+
+func ConstructHttpRequest() string {
+	messageType := ChooseRandomRequestType()
+	path := " /index.html HHTP/1.1\" 200 "
+	responseSize := strconv.Itoa(randomNumBetween(800, 1600))
+	return "\"" + messageType + path + responseSize
+}
+
 func ConstructRequestDateTime(date, time string) string {
 	return "[" + date + ":" + time + " +0000]"
 }
@@ -25,8 +39,7 @@ func ConstructStandardDateTime(date, time string) string {
 
 func ChooseRandomMessageOrigin() string {
 	origins := []string{"[Security]", "[Database]", "[SystemMonitor]", "[UserManagementService]"}
-	num := randomNumUnder(4)
-	return origins[num]
+	return Sample(origins)
 }
 
 func GenerateRandomIp() string {
@@ -57,8 +70,20 @@ func GenerateRandomTime() string {
 
 func ChooseRandomMessageType() string {
 	messageTypes := []string{"INFO", "WARN", "ERROR"}
-	num := randomNumUnder(3)
-	return messageTypes[num]
+	return Sample(messageTypes)
+}
+
+func ChooseRandomRequestType() string {
+	requestTypes := []string{"GET", "POST", "PUT", "DELETE"}
+	return Sample(requestTypes)
+}
+
+func ChooseRandomQueryType() string {
+	queryTypes := []string{ "SELECT col1, col2 FROM table_name WHERE col2 IS NOT NULL", 
+							"DELETE FROM table_name WHERE col2 IS NULL",
+							"INSERT INTO table_name (col1, col2) VALUES (val1, val2)",
+							"UPDATE table_name SET col1 = val1 WHERE col2 IS NOT NULL" }
+	return Sample(queryTypes)
 }
 
 func GenerateDateComponents() []string {
@@ -119,4 +144,10 @@ func randomNumUnder(num int) int {
 
 func randomNumBetween(bottom, top int) int {
 	return rand.Intn(top-bottom) + bottom
+}
+
+func Sample(coll []string) string {
+	length := len(coll)
+	num := randomNumUnder(length)
+	return coll[num]
 }
