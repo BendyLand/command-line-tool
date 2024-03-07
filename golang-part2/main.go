@@ -8,16 +8,26 @@ import (
 )
 
 func main() {
-	for i := 0; i < 100; i++ {
-		displayAll()
-	}
+	logChan := make(chan string)
+	requestChan := make(chan string)
+
+	go GenerateLogMessage(logChan)
+	go GenerateRequestMessage(requestChan)
+
+	logMessage := <- logChan
+	requestMessage := <- requestChan
+
+	fmt.Println("Log message: " + logMessage)
+	fmt.Println("Request message: " + requestMessage)
 }
 
-func ConstructHttpRequest() string {
-	messageType := utils.ChooseRandomRequestType()
-	path := " /index.html HTTP/1.1\" 200 "
-	responseSize := strconv.Itoa(utils.RandomNumBetween(800, 1600))
-	return "\"" + messageType + path + responseSize
+// Two functions to call ConstructFullMessage functions and send results to a channel
+func GenerateRequestMessage(ch chan<- string) {
+	ch <- ConstructFullRandomRequestMessage()
+}
+
+func GenerateLogMessage(ch chan<- string) {
+	ch <- ConstructFullRandomLogMessage()
 }
 
 func ConstructFullRandomRequestMessage() string {
@@ -47,18 +57,17 @@ func ConstructFullRandomLogMessage() string {
 	return fmt.Sprintf("%s %s %s %s", dateTime, messageType, origin, message)
 }
 
+func ConstructHttpRequest() string {
+	messageType := utils.ChooseRandomRequestType()
+	path := " /index.html HTTP/1.1\" 200 "
+	responseSize := strconv.Itoa(utils.RandomNumBetween(800, 1600))
+	return "\"" + messageType + path + responseSize
+}
+
 func displayAll() {
 	fmt.Println()
 	fmt.Println(ConstructFullRandomLogMessage())
-	fmt.Println(ConstructFullRandomLogMessage())
-	fmt.Println(ConstructFullRandomLogMessage())
-	fmt.Println(ConstructFullRandomLogMessage())
-	fmt.Println(ConstructFullRandomLogMessage())
 	fmt.Println()
-	fmt.Println(ConstructFullRandomRequestMessage())
-	fmt.Println(ConstructFullRandomRequestMessage())
-	fmt.Println(ConstructFullRandomRequestMessage())
-	fmt.Println(ConstructFullRandomRequestMessage())
 	fmt.Println(ConstructFullRandomRequestMessage())
 	fmt.Println()
 }
