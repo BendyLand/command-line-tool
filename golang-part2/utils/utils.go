@@ -78,7 +78,7 @@ func ConstructFullRandomRequestMessage() string {
 func ConstructHttpRequest() string {
 	messageType := ChooseRandomRequestType()
 	path := " /index.html HHTP/1.1\" 200 "
-	responseSize := strconv.Itoa(randomNumBetween(800, 1600))
+	responseSize := strconv.Itoa(RandomNumBetween(800, 1600))
 	return "\"" + messageType + path + responseSize
 }
 
@@ -99,7 +99,7 @@ func ChooseRandomMessageOrigin() string {
 func GenerateRandomIp() string {
 	var nums []string
 	for i := 0; i < 5; i++ {
-		rand := strconv.Itoa(randomNumUnder(256))
+		rand := strconv.Itoa(RandomNumUnder(256))
 		nums = append(nums, rand)
 	}
 	return strings.Join(nums, ".")
@@ -107,13 +107,13 @@ func GenerateRandomIp() string {
 
 func GenerateRandomTime() string {
 	var times []string
-	randHour := strconv.Itoa(randomNumBetween(1, 13))
+	randHour := strconv.Itoa(RandomNumBetween(1, 13))
 	if len(randHour) < 2 {
 		randHour = "0" + randHour
 	}
 	times = append(times, randHour)
 	for i := 0; i < 2; i++ {
-		rand := strconv.Itoa(randomNumUnder(60))
+		rand := strconv.Itoa(RandomNumUnder(60))
 		if len(rand) < 2 {
 			rand = "0" + rand
 		}
@@ -142,12 +142,12 @@ func ChooseRandomQueryType() string {
 }
 
 func GenerateDateComponents() []string {
-	year := strconv.Itoa(randomNumBetween(1970, 2025))
-	month := strconv.Itoa(randomNumBetween(1, 13))
+	year := strconv.Itoa(RandomNumBetween(1970, 2025))
+	month := strconv.Itoa(RandomNumBetween(1, 13))
 	if len(month) < 2 {
 		month = "0" + month
 	}
-	day := strconv.Itoa(randomNumBetween(1, 32))
+	day := strconv.Itoa(RandomNumBetween(1, 32))
 	if len(day) < 2 {
 		day = "0" + day
 	}
@@ -193,16 +193,16 @@ func GenerateRequestStyleRandomDate() string {
 	return strings.Join(dateComponents, "/")
 }
 
-func randomNumUnder(num int) int {
+func RandomNumUnder(num int) int {
 	return rand.Int() % num
 }
 
-func randomNumBetween(bottom, top int) int {
+func RandomNumBetween(bottom, top int) int {
 	return rand.Intn(top-bottom) + bottom
 }
 
 func Sample(coll []string) string {
 	length := len(coll)
-	num := randomNumUnder(length)
+	num := RandomNumUnder(length)
 	return coll[num]
 }
