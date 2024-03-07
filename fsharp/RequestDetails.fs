@@ -29,6 +29,6 @@ let constructHttpRequest () =
     let responseSize = Random().Next(800, 1601)
     $"%s{ip} - - %s{timestamp} \"%A{requestType} %s{path}\" 200 %d{responseSize}"
 
-let chooseRandomMessageOrigin = 
+let chooseRandomQueryType () = 
     let options = [|SELECT; INSERT; UPDATE; QueryType.DELETE|]
     sample options

@@ -2,6 +2,7 @@ module MessageDetails
 
 open Utils
 open MyDateTime
+open RequestDetails
 
 type MessageType = 
     | ERROR
@@ -33,7 +34,8 @@ let generateInfoMessage messageOrigin =
     match messageOrigin with
     | UserManagementService -> "Successfully created user account!"
     | Database -> 
-        let origin = chooseRandomMessageOrigin().ToString()
+        let origin = chooseRandomQueryType().ToString()
+        printfn $"{origin}"
         let query = generateRandomSqlQuery origin
         $"Executing SQL query: %s{query}"
     | Security -> 
