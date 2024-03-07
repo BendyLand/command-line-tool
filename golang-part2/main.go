@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"golang-part2/pkgs/datetime"
 	"golang-part2/pkgs/utils"
@@ -11,23 +12,75 @@ import (
 
 func main() {
 	numLogFiles := 10
-	logsPerFile := 100
-	numGoroutines := 10
+	logsPerFile := 1000
 	wg := sync.WaitGroup{}
 
-	logChan := make(chan string, numGoroutines)
+	logChan := make(chan string, numLogFiles)
+	defer close(logChan)
 
-	for i := 0; i < numGoroutines; i++ {
+	for i := 0; i < numLogFiles; i++ {
 		wg.Add(1)
 		go GenerateLogMessages(logChan, logsPerFile, &wg)
 	}
 
 	WriteMessagesToFile(logChan, numLogFiles, logsPerFile)
-
 	wg.Wait()
+
+	success := CombineTextFiles(numLogFiles)
+	if success {
+		fmt.Println("Successfully combined files!")
+	} else {
+		fmt.Println("Unable to combine files.")
+	}
+}
+
+func CombineTextFiles(numLogFiles int) bool {
+	var filenames []string
+	for i := 0; i < numLogFiles; i++ {
+		filename := fmt.Sprintf("logs/log%d.txt", i+1)
+		filenames = append(filenames, filename)
+	}
+	resultFile, err := os.Create("result_logs.txt")
+	if err != nil {
+		fmt.Println("Error creating output file: ", err)
+		return false
+	}
+	defer resultFile.Close()
+
+	for _, filename := range filenames {
+		inputFile, err := os.Open(filename)
+		if err != nil {
+			fmt.Println("Error opening file: ", err)
+			return false
+		}
+		defer inputFile.Close()
+
+		success := ScanFromInputToResult(inputFile, resultFile)
+		if !success {
+			return false
+		}
+	}
+	return true
+}
+
+func ScanFromInputToResult(inputFile, resultFile *os.File) bool {
+	scanner := bufio.NewScanner(inputFile)
+	for scanner.Scan() {
+		_, err := resultFile.WriteString(scanner.Text() + "\n")
+		if err != nil {
+			fmt.Println("Error writing to result file: ", err)
+			return false
+		}
+	}
+	if scanErr := scanner.Err(); scanErr != nil {
+		fmt.Println("Error reading input file: ", scanErr)
+		return false
+	}
+	return true
 }
 
 func WriteMessagesToFile(logChan chan string, numLogFiles, logsPerFile int) {
+	// Create each new file based on iteration #
 	for i := 0; i < numLogFiles; i++ {
 		filename := fmt.Sprintf("logs/log%d.txt", i+1)
 		file, err := os.Create(filename)
@@ -37,9 +90,9 @@ func WriteMessagesToFile(logChan chan string, numLogFiles, logsPerFile int) {
 		}
 		defer file.Close()
 
+		// Write each log to the file with a newline
 		for j := 0; j < logsPerFile; j++ {
 			logMessage := <-logChan
-
 			_, err := file.WriteString(logMessage + "\n")
 			if err != nil {
 				fmt.Println("Error writing to file:", err)
@@ -50,7 +103,7 @@ func WriteMessagesToFile(logChan chan string, numLogFiles, logsPerFile int) {
 	}
 }
 
-// Generates multiple random log messages and sends them to the provided channel
+// Generates a given number of random logs and sends them to the provided channel
 func GenerateLogMessages(ch chan<- string, logsPerFile int, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for i := 0; i < logsPerFile; i++ {
