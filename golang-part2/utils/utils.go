@@ -1,19 +1,27 @@
 package utils
 
 import (
+	"fmt"
 	"math/rand"
 	"strconv"
 	"strings"
 )
 
-/*
-2001-02-13T05:16:14 INFO [Security] Successful login: IP address 137.221.132.152.201, username 'admin'
-1974-01-01T05:34:59 INFO [Database] Executing SQL query: SELECT col1, col2 FROM table_name WHERE col2 IS NOT NULL
-1997-06-11T11:27:18 INFO [SystemMonitor] CPU utilization: 30%, Memory usage: 60%, Disk space available: 50%
-2010-08-26T02:54:02 ERROR [UserManagementService] Error processing user registration request: User email already exists
-*/
-
-
+func ConstructFullRandomLogMessage() string {
+	dateTime := GenerateStandardStyleRandomDate()
+	messageType := ChooseRandomMessageType()
+	origin := ChooseRandomMessageOrigin()
+	var message string
+	switch messageType {
+	case "INFO":
+		message = ChooseInfoMessageFromOrigin(origin)
+	case "WARN":
+		message = ChooseWarnMessageFromOrigin(origin)
+	case "ERROR":
+		message = ChooseErrorMessageFromOrigin(origin)
+	}
+	return fmt.Sprintf("%s %s %s %s", dateTime, messageType, origin, message)
+}
 
 func ChooseErrorMessageFromOrigin(origin string) string {
 	var message string
@@ -38,7 +46,7 @@ func ChooseWarnMessageFromOrigin(origin string) string {
 	case "[Database]":
 		message = "SQL query may be missing rows. Please double check your input data."
 	case "[SystemMonitor]":
-		message = "Suspicious login attempt detected: IP address 56.75.109.2.235, username 'admin'"
+		message = "Disk space utilization at 80%. Consider adding more storage or removing unneeded files."
 	case "[UserManagementService]":
 		message = "Password may not contain enough variety. Proceed with caution."
 	}
