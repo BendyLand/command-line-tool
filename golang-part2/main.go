@@ -13,7 +13,7 @@ import (
 func main() {
 	numLogFiles := 10
 	logsPerFile := 1000
-	wg := sync.WaitGroup{}
+	var wg sync.WaitGroup
 
 	logChan := make(chan string, numLogFiles)
 	defer close(logChan)
@@ -28,7 +28,7 @@ func main() {
 
 	success := CombineTextFiles(numLogFiles)
 	if success {
-		fmt.Println("Successfully combined files!")
+		fmt.Println("Successfully combined files to 'result_logs.txt'!")
 	} else {
 		fmt.Println("Unable to combine files.")
 	}
@@ -55,7 +55,7 @@ func CombineTextFiles(numLogFiles int) bool {
 		}
 		defer inputFile.Close()
 
-		success := ScanFromInputToResult(inputFile, resultFile)
+		success := ScanInputFileToResult(inputFile, resultFile)
 		if !success {
 			return false
 		}
@@ -63,7 +63,7 @@ func CombineTextFiles(numLogFiles int) bool {
 	return true
 }
 
-func ScanFromInputToResult(inputFile, resultFile *os.File) bool {
+func ScanInputFileToResult(inputFile, resultFile *os.File) bool {
 	scanner := bufio.NewScanner(inputFile)
 	for scanner.Scan() {
 		_, err := resultFile.WriteString(scanner.Text() + "\n")
