@@ -4,23 +4,31 @@ import scala.io.StdIn
 import bland.note.*
 import bland.user.*
 
-class Notebook(val name: String):
-    var notes = List.empty[Note]
-    var currentId = 0
+object Notebook:
+    def viewNotes =
+        val notebook = User.findNotebook
+        notebook match
+            case Some(nb) => nb.displayNotes
+            case None => println("Unable to find notebook")
+        User.loop
 
-    def writeNote() =
-        println("Enter the text for your note:")
-        val text = StdIn.readLine()
-        val note = Note(currentId, text)
-        notes = note :: notes
-        currentId += 1
+    def writeNewNote = 
+        val notebook = User.findNotebook
+        notebook match
+            case Some(nb) => nb.addNote
+            case None => println("Unable to find notebook")
+        User.loop
 
-    def viewNotes(nb: Notebook) =
-        nb.displayNotes()
+    def createNotebook = 
+        println("Enter a name for your new notebook:")
+        val name = StdIn.readLine()
+        User.createNewNotebook(name)
+        println(s"Successfully created notebook: '$name'")
+        User.loop
 
-    def addNote() =
+    def addNote =
         println("Please select which notebook to write in:")
-        User.showNotebooks()
+        User.showNotebooks
         try
             val notebookNum = StdIn.readInt()
             if notebookNum-1 >= User.notebooks.size then
@@ -29,25 +37,22 @@ class Notebook(val name: String):
                 println("Please enter your note: ")
                 val nb = User.notebooks(notebookNum-1)
                 val newNote = StdIn.readLine()
-                nb.writeNote()
+                nb.addNote
         catch
             case _: java.lang.NumberFormatException =>
                 println("Invalid input")
 
-    def displayNotes() =
+class Notebook(val name: String):
+    var notes = List.empty[Note]
+
+    def addNote =
+        println("Enter the text for your note:")
+        val text = StdIn.readLine()
+        val note = Note(text)
+        notes = note :: notes
+
+    def displayNotes =
         println("Here are your notes: ")
         for i <- 1 to notes.size do
             println(s"$i.) ${notes(i-1).body}")
-
-    def deleteNote(id: Int): Boolean =
-        var newList = List.empty[Note]
-        notes.foreach { note =>
-            if note.id != id-1 then
-                newList = note :: newList
-        }
-        var result = true
-        if newList.size == notes.size then
-            println("Warning, possible invalid note ID. Please double check your notebook.")
-            result = false
-        notes = newList
-        result
+        println()
