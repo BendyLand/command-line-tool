@@ -8,8 +8,8 @@ object User:
 
     def loop: Unit =
         println(
-            "Please choose an action:\n" +
-            "1.) Create new notebook\n2.) Write note\n3.) View notes\n4.) Delete note\n5.) Exit"
+            "\nPlease choose an action:\n" +
+            "\n1.) Create new notebook\n2.) Write note\n3.) View notes\n4.) Delete note\n5.) Exit\n"
         )
         val input = StdIn.readLine().trim()
         input match
@@ -17,11 +17,11 @@ object User:
             case "2" => Notebook.writeNewNote
             case "3" => Notebook.viewNotes
             case _ =>
-                println("Shutting down notebook app...")
+                println("\nShutting down notebook app...")
 
     def findNotebook: Option[Notebook] =
-        println("Which notebook would you like to use?")
-        showNotebooks
+        println("\nWhich notebook would you like to use?\n")
+        displayNotebooks
         try
             val notebookNum = StdIn.readInt().abs
             if notebookNum-1 >= notebooks.size then
@@ -30,14 +30,14 @@ object User:
                 val nb = notebooks(notebookNum-1)
                 Some(nb)
         catch
-            case err: java.lang.NumberFormatException => 
-                println("Invalid input")
+            case _: java.lang.NumberFormatException => 
+                println("\nInvalid input")
                 findNotebook
 
     def createNewNotebook(name: String) =
         notebooks = Notebook(name) +: notebooks
 
-    def showNotebooks =
+    def displayNotebooks =
         for i <- 1 to notebooks.size do
             println(s"$i.) ${notebooks(i-1).name}")
         println()
@@ -48,16 +48,16 @@ object User:
 
     def greet =
         println(
-            "Welcome to the Scala Notebook App!\n" +
-            "To get started, let's choose an action:\n" +
-            "1.) Create\n2.) Exit"
+            "\nWelcome to the Scala Notebook App!\n" +
+            "\nTo get started, let's choose an action:\n" +
+            "\n1.) Create\n2.) Exit\n"
         )
         var input = StdIn.readLine().trim()
         input match
             case "1" =>
-                println("Please enter a name for your notebook:")
+                println("\nPlease enter a name for your notebook:\n")
                 val nbName = StdIn.readLine().trim()
                 User.createNewNotebook(nbName)
                 loop
             case _ =>
-                println("Shutting down notebook app...")
+                println("\nShutting down notebook app...")
