@@ -1,18 +1,40 @@
 package bland.notebook
 
-import bland.note.Note
+import scala.io.StdIn
+import bland.note.*
+import bland.user.*
 
-class Notebook:
+class Notebook(val name: String):
     var notes = List.empty[Note]
     var currentId = 0
 
-    def createNote(text: String): Note =
+    def writeNote() =
+        println("Enter the text for your note:")
+        val text = StdIn.readLine()
         val note = Note(currentId, text)
         notes = note :: notes
         currentId += 1
-        note
 
-    def displayNotes: Unit =
+    def viewNotes(nb: Notebook) = 
+        nb.displayNotes()
+
+    def addNote() = 
+        println("Please select which notebook to write in:")
+        User.showNotebooks()
+        try
+            val notebookNum = StdIn.readInt()
+            if notebookNum-1 >= User.notebooks.size then
+                println("Couldn't find notebook")
+            else
+                println("Please enter your note: ")
+                val nb = User.notebooks(notebookNum-1)
+                val newNote = StdIn.readLine()
+                nb.writeNote()
+        catch 
+            case _: java.lang.NumberFormatException => 
+                println("Invalid input")
+
+    def displayNotes() =
         println("Here are your notes: ")
         for i <- 1 to notes.size do
             println(s"$i.) ${notes(i-1).body}")
