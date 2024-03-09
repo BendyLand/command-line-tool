@@ -23,16 +23,14 @@ object User:
                 println("Please select which notebook to write in:")
                 showNotebooks()
                 try
-                    val notebookNum = StdIn.readInt()
-                    if notebookNum-1 >= notebooks.size then
-                        println("Couldn't find notebook")
-                    else
-                        val nb = notebooks(notebookNum-1)
-                        nb.writeNote()
-                        loop()
+                    val notebook = findNotebook()
+                    notebook match
+                        case Some(nb) => nb.writeNote()
+                        case None => println("Unable to find notebook")
                 catch 
                     case _: java.lang.NumberFormatException => 
                         println("Invalid input")
+                loop()
             case "3" => 
                 println("Please select which notebook to look through:")
                 User.showNotebooks()
@@ -50,7 +48,7 @@ object User:
 
 
     def findNotebook(): Option[Notebook] = 
-        val notebookNum = StdIn.readInt()
+        val notebookNum = StdIn.readInt().abs
         if notebookNum-1 >= User.notebooks.size then
             println("Couldn't find notebook")
             None
