@@ -1,13 +1,59 @@
 package utils
 
 import (
+	"bufio"
 	"fmt"
 	"math/rand"
-	"strconv"
 	"os"
+	"strconv"
 	"strings"
-	"bufio"
 )
+
+func Cleanup(numLogFiles int) {
+	success := CombineTextFiles(numLogFiles)
+	if success {
+		fmt.Println("Successfully combined files to 'result_logs.txt'!")
+	} else {
+		fmt.Println("Unable to combine files.")
+	}
+	EmptyDirectory("logs")
+}
+
+func EmptyDirectory(path string) {
+	files, err := os.ReadDir(path)
+	if err != nil {
+		fmt.Println("Error getting files:", err)
+		os.Exit(1)
+	}
+	for i, file := range files {
+		err := os.Remove(path + "/" + file.Name())
+		if err != nil {
+			fmt.Println("Problem removing file", i+1)
+		}
+	}
+	fmt.Println("Directories removed successfully!")
+}
+
+func Exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	} // no issues detected
+	if os.IsNotExist(err) {
+		return false, nil
+	} // checks if the error was caused from something not existing
+	return false, err // otherwise there was some other issue
+}
+
+func CreateDirectory(path string) bool {
+	err := os.Mkdir(path, 0750)
+	if err != nil {
+		fmt.Println("Error creating directory")
+		return false
+	}
+	fmt.Println("Successfully created directory 'logs'")
+	return true
+}
 
 func CombineTextFiles(numLogFiles int) bool {
 	var filenames []string

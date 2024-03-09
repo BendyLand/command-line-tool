@@ -4,51 +4,50 @@ import (
 	"fmt"
 	"golang-part2/pkgs/datetime"
 	"golang-part2/pkgs/utils"
+	"os"
 	"strconv"
 	"sync"
 )
 
 func main() {
-	totalNumLogMessages := Greet()
-	numLogFiles := int(totalNumLogMessages / 100)
-	if numLogFiles < 1 {
-		numLogFiles = 1
+	dirExists, _ := utils.Exists("logs")
+	if !dirExists {
+		os.Mkdir("logs", 0750)
 	}
-	logsPerFile := int(totalNumLogMessages / numLogFiles)
+	numLogFiles, logsPerFile := Greet()
 	var wg sync.WaitGroup
 
 	logChan := make(chan string, numLogFiles)
 	defer close(logChan)
-
 	for i := 0; i < numLogFiles; i++ {
 		wg.Add(1)
 		go GenerateLogMessages(logChan, logsPerFile, &wg)
 	}
-
 	utils.WriteMessagesToFile(logChan, numLogFiles, logsPerFile)
 	wg.Wait()
 
-	success := utils.CombineTextFiles(numLogFiles)
-	if success {
-		fmt.Println("Successfully combined files to 'result_logs.txt'!")
-	} else {
-		fmt.Println("Unable to combine files.")
-	}
+	utils.Cleanup(numLogFiles)
 }
 
-func Greet() int {
+func Greet() (int, int) {
 	fmt.Println(
 		"Welcome to the Go Random Log Generator!",
 		"\nHow many log messages would you like to generate?",
 	)
 	var input string
 	fmt.Scan(&input)
-	num, err := strconv.Atoi(input)
+	var logsToGenerate, numLogFiles, logsPerFile int
+	logsToGenerate, err := strconv.Atoi(input)
 	if err != nil {
 		fmt.Println("Invalid input")
-		num = Greet()
+		numLogFiles, logsPerFile = Greet()
 	}
-	return num
+	numLogFiles = int(logsToGenerate / 100)
+	if numLogFiles < 1 {
+		numLogFiles = 1
+	}
+	logsPerFile = int(logsToGenerate / numLogFiles)
+	return numLogFiles, logsPerFile
 }
 
 // Generates a given number of random logs and sends them to the provided channel
