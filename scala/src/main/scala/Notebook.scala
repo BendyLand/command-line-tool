@@ -15,10 +15,10 @@ class Notebook(val name: String):
         notes = note :: notes
         currentId += 1
 
-    def viewNotes(nb: Notebook) = 
+    def viewNotes(nb: Notebook) =
         nb.displayNotes()
 
-    def addNote() = 
+    def addNote() =
         println("Please select which notebook to write in:")
         User.showNotebooks()
         try
@@ -30,8 +30,8 @@ class Notebook(val name: String):
                 val nb = User.notebooks(notebookNum-1)
                 val newNote = StdIn.readLine()
                 nb.writeNote()
-        catch 
-            case _: java.lang.NumberFormatException => 
+        catch
+            case _: java.lang.NumberFormatException =>
                 println("Invalid input")
 
     def displayNotes() =
