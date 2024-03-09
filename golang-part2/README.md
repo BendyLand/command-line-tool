@@ -1,5 +1,11 @@
 # Go Log File Generator
 
+## Usage
+
+1) Run the program with `go run .`
+2) Enter the number of random log messages you want to generate.
+3) That's it! The program will generate your random log messages and write them to a file called 'result_logs.txt'.
+
 ## Purpose
 
 I got the idea for *this* project while implementing my original log file generator in F#. 

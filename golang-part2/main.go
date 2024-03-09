@@ -1,18 +1,20 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"golang-part2/pkgs/datetime"
 	"golang-part2/pkgs/utils"
-	"os"
 	"strconv"
 	"sync"
 )
 
 func main() {
-	numLogFiles := 10
-	logsPerFile := 1000
+	totalNumLogMessages := Greet()
+	numLogFiles := int(totalNumLogMessages / 100)
+	if numLogFiles < 1 {
+		numLogFiles = 1
+	}
+	logsPerFile := int(totalNumLogMessages / numLogFiles)
 	var wg sync.WaitGroup
 
 	logChan := make(chan string, numLogFiles)
@@ -23,10 +25,10 @@ func main() {
 		go GenerateLogMessages(logChan, logsPerFile, &wg)
 	}
 
-	WriteMessagesToFile(logChan, numLogFiles, logsPerFile)
+	utils.WriteMessagesToFile(logChan, numLogFiles, logsPerFile)
 	wg.Wait()
 
-	success := CombineTextFiles(numLogFiles)
+	success := utils.CombineTextFiles(numLogFiles)
 	if success {
 		fmt.Println("Successfully combined files to 'result_logs.txt'!")
 	} else {
@@ -34,73 +36,19 @@ func main() {
 	}
 }
 
-func CombineTextFiles(numLogFiles int) bool {
-	var filenames []string
-	for i := 0; i < numLogFiles; i++ {
-		filename := fmt.Sprintf("logs/log%d.txt", i+1)
-		filenames = append(filenames, filename)
-	}
-	resultFile, err := os.Create("result_logs.txt")
+func Greet() int {
+	fmt.Println(
+		"Welcome to the Go Random Log Generator!",
+		"\nHow many log messages would you like to generate?",
+	)
+	var input string
+	fmt.Scan(&input)
+	num, err := strconv.Atoi(input)
 	if err != nil {
-		fmt.Println("Error creating output file: ", err)
-		return false
+		fmt.Println("Invalid input")
+		num = Greet()
 	}
-	defer resultFile.Close()
-
-	for _, filename := range filenames {
-		inputFile, err := os.Open(filename)
-		if err != nil {
-			fmt.Println("Error opening file: ", err)
-			return false
-		}
-		defer inputFile.Close()
-
-		success := ScanInputFileToResult(inputFile, resultFile)
-		if !success {
-			return false
-		}
-	}
-	return true
-}
-
-func ScanInputFileToResult(inputFile, resultFile *os.File) bool {
-	scanner := bufio.NewScanner(inputFile)
-	for scanner.Scan() {
-		_, err := resultFile.WriteString(scanner.Text() + "\n")
-		if err != nil {
-			fmt.Println("Error writing to result file: ", err)
-			return false
-		}
-	}
-	if scanErr := scanner.Err(); scanErr != nil {
-		fmt.Println("Error reading input file: ", scanErr)
-		return false
-	}
-	return true
-}
-
-func WriteMessagesToFile(logChan chan string, numLogFiles, logsPerFile int) {
-	// Create each new file based on iteration #
-	for i := 0; i < numLogFiles; i++ {
-		filename := fmt.Sprintf("logs/log%d.txt", i+1)
-		file, err := os.Create(filename)
-		if err != nil {
-			fmt.Println("Error creating file:", err)
-			continue
-		}
-		defer file.Close()
-
-		// Write each log to the file with a newline
-		for j := 0; j < logsPerFile; j++ {
-			logMessage := <-logChan
-			_, err := file.WriteString(logMessage + "\n")
-			if err != nil {
-				fmt.Println("Error writing to file:", err)
-				continue
-			}
-		}
-		fmt.Println("Log messages written to:", filename)
-	}
+	return num
 }
 
 // Generates a given number of random logs and sends them to the provided channel
@@ -153,12 +101,4 @@ func ConstructHttpRequest() string {
 	path := " /index.html HTTP/1.1\" 200 "
 	responseSize := strconv.Itoa(utils.RandomNumBetween(800, 1600))
 	return "\"" + messageType + path + responseSize
-}
-
-func displayAll() {
-	fmt.Println()
-	fmt.Println(ConstructFullRandomLogMessage())
-	fmt.Println()
-	fmt.Println(ConstructFullRandomRequestMessage())
-	fmt.Println()
 }

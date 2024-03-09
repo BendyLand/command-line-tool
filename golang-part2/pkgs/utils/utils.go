@@ -4,8 +4,79 @@ import (
 	"fmt"
 	"math/rand"
 	"strconv"
+	"os"
 	"strings"
+	"bufio"
 )
+
+func CombineTextFiles(numLogFiles int) bool {
+	var filenames []string
+	for i := 0; i < numLogFiles; i++ {
+		filename := fmt.Sprintf("logs/log%d.txt", i+1)
+		filenames = append(filenames, filename)
+	}
+	resultFile, err := os.Create("result_logs.txt")
+	if err != nil {
+		fmt.Println("Error creating output file: ", err)
+		return false
+	}
+	defer resultFile.Close()
+
+	for _, filename := range filenames {
+		inputFile, err := os.Open(filename)
+		if err != nil {
+			fmt.Println("Error opening file: ", err)
+			return false
+		}
+		defer inputFile.Close()
+
+		success := ScanInputFileToResult(inputFile, resultFile)
+		if !success {
+			return false
+		}
+	}
+	return true
+}
+
+func ScanInputFileToResult(inputFile, resultFile *os.File) bool {
+	scanner := bufio.NewScanner(inputFile)
+	for scanner.Scan() {
+		_, err := resultFile.WriteString(scanner.Text() + "\n")
+		if err != nil {
+			fmt.Println("Error writing to result file: ", err)
+			return false
+		}
+	}
+	if scanErr := scanner.Err(); scanErr != nil {
+		fmt.Println("Error reading input file: ", scanErr)
+		return false
+	}
+	return true
+}
+
+func WriteMessagesToFile(logChan chan string, numLogFiles, logsPerFile int) {
+	// Create each new file based on iteration #
+	for i := 0; i < numLogFiles; i++ {
+		filename := fmt.Sprintf("logs/log%d.txt", i+1)
+		file, err := os.Create(filename)
+		if err != nil {
+			fmt.Println("Error creating file:", err)
+			continue
+		}
+		defer file.Close()
+
+		// Write each log to the file with a newline
+		for j := 0; j < logsPerFile; j++ {
+			logMessage := <-logChan
+			_, err := file.WriteString(logMessage + "\n")
+			if err != nil {
+				fmt.Println("Error writing to file:", err)
+				continue
+			}
+		}
+		fmt.Println("Log messages written to:", filename)
+	}
+}
 
 func ChooseErrorMessageFromOrigin(origin string) string {
 	var message string
