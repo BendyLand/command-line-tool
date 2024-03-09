@@ -26,7 +26,7 @@ let constructHttpRequest () =
     let dateComponents = generateDateComponents()
     let timestamp = generateHttpStyleDate dateComponents
     let ip = generateRandomIp()
-    let responseSize = Random().Next(800, 1601)
+    let responseSize = randomNumBetween 800 1601
     $"%s{ip} - - %s{timestamp} \"%A{requestType} %s{path}\" 200 %d{responseSize}"
 
 let chooseRandomQueryType () = 

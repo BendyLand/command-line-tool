@@ -35,7 +35,6 @@ let generateInfoMessage messageOrigin =
     | UserManagementService -> "Successfully created user account!"
     | Database -> 
         let origin = chooseRandomQueryType().ToString()
-        printfn $"{origin}"
         let query = generateRandomSqlQuery origin
         $"Executing SQL query: %s{query}"
     | Security -> 
