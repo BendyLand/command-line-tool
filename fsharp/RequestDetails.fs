@@ -1,6 +1,5 @@
 module RequestDetails
 
-open System
 open Utils
 open MyDateTime
 
