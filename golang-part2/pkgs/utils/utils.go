@@ -102,6 +102,7 @@ func ScanInputFileToResult(inputFile, resultFile *os.File) bool {
 
 func WriteMessagesToFile(logChan chan string, numLogFiles, logsPerFile int) {
 	// Create each new file based on iteration #
+	fmt.Println("Generating data...")
 	for i := 0; i < numLogFiles; i++ {
 		filename := fmt.Sprintf("logs/log%d.txt", i+1)
 		file, err := os.Create(filename)
@@ -120,7 +121,6 @@ func WriteMessagesToFile(logChan chan string, numLogFiles, logsPerFile int) {
 				continue
 			}
 		}
-		fmt.Println("Log messages written to:", filename)
 	}
 }
 

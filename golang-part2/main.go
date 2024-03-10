@@ -31,8 +31,8 @@ func main() {
 
 func Greet() (int, int) {
 	fmt.Println(
-		"Welcome to the Go Random Log Generator!",
-		"\nHow many log messages would you like to generate?",
+		"\nWelcome to the Go Random Log Generator!\n",
+		"\nHow many log messages would you like to generate?\n",
 	)
 	var input string
 	fmt.Scan(&input)
