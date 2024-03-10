@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define MAX_CHARS 100
-#define MAX_TASKS 100
+#define MAX_TASKS 10
 
 typedef struct {
     int id;
@@ -13,21 +13,32 @@ typedef struct {
 Task tasks[MAX_TASKS];
 int numTasks = 0;
 
-void display(Task* task) {
-    printf("Task ID: %d\nTask body: %s\n", task->id, task->body);
+void display() {
+    for (int i = 0; i < MAX_TASKS; i++) {
+        if (tasks[i].body != NULL) {
+            printf("Task ID: %d\nTask body: %s\n", tasks[i].id, tasks[i].body);
+        }
+    }
 }
 
-void createTask(Task* task) {
-    printf("Enter the task body: ");
-    char buffer[MAX_CHARS]; 
-    fgets(buffer, sizeof(buffer), stdin); 
-    buffer[strcspn(buffer, "\n")] = '\0';
-    task->body = malloc(strlen(buffer) + 1); 
-    strcpy(task->body, buffer); 
+void createTask() {
+    if (numTasks < MAX_TASKS) {
+        Task* newTask = &tasks[numTasks++];
+        newTask->id = numTasks; 
+        printf("Enter the task body for task %d: ", newTask->id);
+        char buffer[100]; 
+        fgets(buffer, sizeof(buffer), stdin); 
+        buffer[strcspn(buffer, "\n")] = '\0'; 
+        newTask->body = strdup(buffer);
+    } else {
+        printf("Task list if full!\n");
+    }
 }
 
-void deleteTask(Task* task) {
-    free(task->body);
+void cleanupTasks() {
+    for (int i = 0; i < MAX_TASKS; i++) {
+        free(tasks[i].body);
+    }
 }
 
 int main(void) {
@@ -35,9 +46,9 @@ int main(void) {
     Task test;
     test.id = 1;
     
-    createTask(&test); 
-    display(&test);
-    deleteTask(&test);
+    createTask(); 
+    display();
+    cleanupTasks();
 
     return 0;
 }
