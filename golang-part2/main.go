@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	dirExists, _ := utils.Exists("logs")
+	dirExists := utils.Exists("logs")
 	if !dirExists {
 		os.Mkdir("logs", 0750)
 	}
@@ -36,8 +36,8 @@ func Greet() (int, int) {
 	)
 	var input string
 	fmt.Scan(&input)
-	var logsToGenerate, numLogFiles, logsPerFile int
 	logsToGenerate, err := strconv.Atoi(input)
+	var numLogFiles, logsPerFile int
 	if err != nil {
 		fmt.Println("Invalid input")
 		numLogFiles, logsPerFile = Greet()

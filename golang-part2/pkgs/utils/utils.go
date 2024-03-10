@@ -34,15 +34,12 @@ func EmptyDirectory(path string) {
 	fmt.Println("Directories removed successfully!")
 }
 
-func Exists(path string) (bool, error) {
+func Exists(path string) bool {
 	_, err := os.Stat(path)
 	if err == nil {
-		return true, nil
-	} // no issues detected
-	if os.IsNotExist(err) {
-		return false, nil
-	} // checks if the error was caused from something not existing
-	return false, err // otherwise there was some other issue
+		return true
+	}
+	return false
 }
 
 func CreateDirectory(path string) bool {
