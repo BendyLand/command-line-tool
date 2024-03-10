@@ -265,3 +265,8 @@ Caused by: scala.meta.internal.metals.debug.BuildTargetNotFoundForPathException:
 
 2024.03.10 10:55:48 WARN  no build tool detected in workspace '/Users/benlandrette/ccode/multi-language-practice/command-line-tool/c'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
 2024.03.10 10:55:48 WARN  Build server is not auto-connectable.[0m
+Mar 10, 2024 1:16:42 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2024.03.10 13:21:57 INFO  Shutting down server[0m
+2024.03.10 13:21:57 INFO  shutting down Metals[0m
+2024.03.10 13:21:57 INFO  Exiting server[0m
