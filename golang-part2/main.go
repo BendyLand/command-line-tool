@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"golang-part2/pkgs/datetime"
 	"golang-part2/pkgs/utils"
+	"math/rand"
 	"os"
 	"strconv"
 	"sync"
@@ -21,7 +22,14 @@ func main() {
 	defer close(logChan)
 	for i := 0; i < numLogFiles; i++ {
 		wg.Add(1)
-		go GenerateLogMessages(logChan, logsPerFile, &wg)
+		randNum := rand.Int() % 5 + 1
+		fmt.Println("random number:", randNum)
+		switch randNum {
+		case 1:
+			go GenerateRequestMessages(logChan, logsPerFile, &wg)
+		default:	
+			go GenerateLogMessages(logChan, logsPerFile, &wg)
+		}
 	}
 	utils.WriteMessagesToFile(logChan, numLogFiles, logsPerFile)
 	wg.Wait()
@@ -56,6 +64,14 @@ func GenerateLogMessages(ch chan<- string, logsPerFile int, wg *sync.WaitGroup) 
 	for i := 0; i < logsPerFile; i++ {
 		logMessage := ConstructFullRandomLogMessage()
 		ch <- logMessage
+	}
+}
+
+func GenerateRequestMessages(ch chan<- string, requestsPerFile int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for i := 0; i < requestsPerFile; i++ {
+		request := ConstructFullRandomRequestMessage()
+		ch <- request
 	}
 }
 

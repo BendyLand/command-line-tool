@@ -175,7 +175,7 @@ func ChooseRandomMessageOrigin() string {
 
 func GenerateRandomIp() string {
 	var nums []string
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 4; i++ {
 		rand := strconv.Itoa(RandomNumUnder(256))
 		nums = append(nums, rand)
 	}
