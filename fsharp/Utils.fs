@@ -32,7 +32,7 @@ let sample coll =
 /// <summary>Creates a random IP address by generating five random numbers between 0 and 255 and joining them with '.'</summary>
 /// <returns>A randomly generated IP address using IPv4 format.</returns>
 let generateRandomIp () = 
-    let nums = seq {for _ in 0..4 -> randomNumUnder 256} |> Seq.toList
+    let nums = seq {for _ in 0..3 -> randomNumUnder 256} |> Seq.toList
     nums 
     |> List.map string
     |> String.concat "."
