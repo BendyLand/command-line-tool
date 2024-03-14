@@ -1,104 +1,118 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	"golang/pkgs/datetime"
+	"golang/pkgs/utils"
+	"math/rand"
 	"os"
-	"strings"
+	"strconv"
+	"sync"
 )
 
 func main() {
-	fmt.Println("\nWelcome to the Go Todo List!")
+	dirExists := utils.Exists("logs")
+	if !dirExists {
+		os.Mkdir("logs", 0750)
+	}
+	numLogFiles, logsPerFile := Greet()
+	var wg sync.WaitGroup
 
-	var tasks []string
-Loop:
-	for {
-		input := getInput()
-		switch input {
-		case "add":
-			addTask(&tasks)
-		case "view":
-			viewTasks(tasks)
-		case "exit":
-			break Loop
-		case "delete":
-			deleteTask(&tasks)
-		case "help":
-			fmt.Println("\nThe available commands are:\n\nadd\nview\nexit\ndelete\nhelp\npanic")
-			fmt.Println("\nType a command to see more information about it. Or type `back` to exit the help menu.\n")
-			var input string
-			fmt.Scan(&input)
-			showDetails(input)
-		case "panic":
-			fmt.Println("\nPanicking...")
-			os.Exit(1)
-		default:
-			fmt.Println("\nInvalid command")
+	logChan := make(chan string, numLogFiles)
+	defer close(logChan)
+	for i := 0; i < numLogFiles; i++ {
+		wg.Add(1)
+		randNum := rand.Int() % 5 + 1
+		switch randNum {
+		case 1:
+			go GenerateRequestMessages(logChan, logsPerFile, &wg)
+		default:	
+			go GenerateLogMessages(logChan, logsPerFile, &wg)
 		}
 	}
-	fmt.Println("\nFinal Todo List: ")
-	viewTasks(tasks)
+	utils.WriteMessagesToFile(logChan, numLogFiles, logsPerFile)
+	wg.Wait()
+
+	utils.Cleanup(numLogFiles)
 }
 
-func showDetails(command string) {
-	switch command {
-	case "add":
-		fmt.Println("\nadd - Adds an item to your list.")
-	case "view":
-		fmt.Println("\nview - Prints the items currents stored in your list in the order they were added.")
-	case "exit":
-		fmt.Println("\nexit - Safely stops execution of the program and prints out the final version of your list.")
-	case "delete":
-		fmt.Println("\ndelete - Prompts the user to select an item to delete by number. A warning is printed if nothing is deleted.")
-	case "help":
-		fmt.Println("\nhelp - Shows a list of the available commands. Prompts the user for more information.")
-	case "panic":
-		fmt.Println("\npanic - Stops execution of the program with error code `1`. The final list is NOT displayed like it is with `exit`.")
-	case "back":
-		fmt.Println("\nHeading back...")
-	default:
-		fmt.Println("\nInvalid command")
-	}
-}
-
-func deleteTask(tasks *[]string) {
-	var n int
-	fmt.Println("\nWhich task would you like to delete?")
-	viewTasks(*tasks)
-	fmt.Scan(&n)
-	n-- // for indexing
-	var newTaskList []string
-	for i, task := range *tasks {
-		if i == n {
-			continue
-		}
-		newTaskList = append(newTaskList, task)
-	}
-	if len(*tasks) == len(newTaskList) {
-		fmt.Println("\nWarning:\nYou may not have entered a valid option.\nPlease double check your list with the `view` command.")
-	}
-	*tasks = newTaskList
-}
-
-func viewTasks(tasks []string) {
-	for i, task := range tasks {
-		fmt.Printf("\nItem %d.) %s", i+1, task)
-	}
-	fmt.Println("\n")
-}
-
-func addTask(tasks *[]string) {
-	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Println("\nPlease enter the task you would like to add: \n")
-	scanner.Scan()
-	newTask := scanner.Text()
-	newTask = strings.TrimSpace(newTask)
-	*tasks = append(*tasks, newTask)
-}
-
-func getInput() string {
+func Greet() (int, int) {
+	fmt.Println(
+		"\nWelcome to the Go Random Log Generator!\n",
+		"\nHow many log messages would you like to generate?\n",
+	)
 	var input string
-	fmt.Println("\nPlease enter a command or type `help`: \n")
 	fmt.Scan(&input)
-	return input
+	logsToGenerate, err := strconv.Atoi(input)
+	var numLogFiles, logsPerFile int
+	if err != nil {
+		fmt.Println("Invalid input")
+		numLogFiles, logsPerFile = Greet()
+	}
+	numLogFiles = int(logsToGenerate / 100)
+	if numLogFiles < 1 {
+		numLogFiles = 1
+	}
+	logsPerFile = int(logsToGenerate / numLogFiles)
+	return numLogFiles, logsPerFile
+}
+
+// Generates a given number of random logs and sends them to the provided channel
+func GenerateLogMessages(ch chan<- string, logsPerFile int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for i := 0; i < logsPerFile; i++ {
+		logMessage := ConstructFullRandomLogMessage()
+		ch <- logMessage
+	}
+}
+
+func GenerateRequestMessages(ch chan<- string, requestsPerFile int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for i := 0; i < requestsPerFile; i++ {
+		request := ConstructFullRandomRequestMessage()
+		ch <- request
+	}
+}
+
+// Functions to call the 'ConstructFullMessage' functions and send results to a channel
+func GenerateRequestMessage(ch chan<- string) {
+	ch <- ConstructFullRandomRequestMessage()
+}
+
+func GenerateLogMessage(ch chan<- string) {
+	ch <- ConstructFullRandomLogMessage()
+}
+
+func ConstructFullRandomRequestMessage() string {
+	ip := utils.GenerateRandomIp()
+	date := datetime.GenerateRequestStyleRandomDate()
+	time := datetime.GenerateRandomTime()
+	dateTime := datetime.ConstructRequestDateTime(date, time)
+	request := ConstructHttpRequest()
+	return ip + " - - " + dateTime + " " + request
+}
+
+func ConstructFullRandomLogMessage() string {
+	date := datetime.GenerateStandardStyleRandomDate()
+	time := datetime.GenerateRandomTime()
+	dateTime := datetime.ConstructStandardDateTime(date, time)
+	messageType := utils.ChooseRandomMessageType()
+	origin := utils.ChooseRandomMessageOrigin()
+	var message string
+	switch messageType {
+	case "INFO":
+		message = utils.ChooseInfoMessageFromOrigin(origin)
+	case "WARN":
+		message = utils.ChooseWarnMessageFromOrigin(origin)
+	case "ERROR":
+		message = utils.ChooseErrorMessageFromOrigin(origin)
+	}
+	return fmt.Sprintf("%s %s %s %s", dateTime, messageType, origin, message)
+}
+
+func ConstructHttpRequest() string {
+	messageType := utils.ChooseRandomRequestType()
+	path := " /index.html HTTP/1.1\" 200 "
+	responseSize := strconv.Itoa(utils.RandomNumBetween(800, 1600))
+	return "\"" + messageType + path + responseSize
 }
