@@ -11,14 +11,14 @@ Each tool will be implemented in a different language, and each language be will
     - For a general purpose CLI to help me learn techniques and use cases.
 - Scala
     - To practice in my preferred language and to practice with static typing.
-- Kotlin
-    - Because Scala isn't as popular in the job market...
 - F#
     - For a more functional approach.
 - Rust
     - To practice writing with performance more as a priority.
 - (Bonus): Go
     - I generally avoid using Go because of previous frustration I experienced with its toolchain, but I was getting bored of the same other languages, so I figured I would give it another try. The difficulty of this project is notably lower than the rest of the ones in this directory.
+- (Another Bonus): C 
+    - I just felt the urge to do some C programming, so I figured a CLI would be a good place to start.
 
 
 ## Objectives
