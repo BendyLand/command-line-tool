@@ -11,14 +11,14 @@ object Notebook:
         val notebook = User.findNotebook
         notebook match
             case Some(nb) => nb.displayNotes
-            case None => println("\nUnable to find notebook")
+            case None     => println("\nUnable to find notebook")
         User.loop
 
     def writeNewNote = 
         val notebook = User.findNotebook
         notebook match
             case Some(nb) => nb.addNote
-            case None => println("\nUnable to find notebook")
+            case None     => println("\nUnable to find notebook")
         User.loop
 
     def createNotebook = 
@@ -32,13 +32,8 @@ object Notebook:
         val notebook = User.findNotebook
         val nb = 
             notebook match
-                case Some(nb) => nb
-                case None => 
-                    println("Couldn't find notebook")
-                    return
-        println("\nPlease enter your note:\n")
-        val newNote = StdIn.readLine()
-        nb.addNote
+                case Some(nb) => nb.addNote
+                case None     => println("Couldn't find notebook")
 
 class Notebook(val name: String):
     var notes = List.empty[Note]
