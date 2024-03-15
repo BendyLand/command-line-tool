@@ -5,6 +5,8 @@ import bland.note.*
 import bland.user.*
 
 object Notebook:
+
+
     def viewNotes =
         val notebook = User.findNotebook
         notebook match
@@ -26,21 +28,17 @@ object Notebook:
         println(s"\nSuccessfully created notebook: '$name'")
         User.loop
 
-    def addNote =
-        println("\nPlease select which notebook to write in:\n")
-        User.displayNotebooks
-        try
-            val notebookNum = StdIn.readInt()
-            if notebookNum-1 >= User.notebooks.size then
-                println("\nCouldn't find notebook")
-            else
-                println("\nPlease enter your note:\n")
-                val nb = User.notebooks(notebookNum-1)
-                val newNote = StdIn.readLine()
-                nb.addNote
-        catch
-            case _: java.lang.NumberFormatException =>
-                println("\nInvalid input")
+    def addNote: Unit =
+        val notebook = User.findNotebook
+        val nb = 
+            notebook match
+                case Some(nb) => nb
+                case None => 
+                    println("Couldn't find notebook")
+                    return
+        println("\nPlease enter your note:\n")
+        val newNote = StdIn.readLine()
+        nb.addNote
 
 class Notebook(val name: String):
     var notes = List.empty[Note]
