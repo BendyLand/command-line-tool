@@ -5,7 +5,11 @@ import bland.note.*
 import bland.user.*
 
 object Notebook:
-
+    def deleteNote = 
+        val notebook = User.findNotebook
+        notebook match
+            case Some(nb) => nb.deleteNote
+            case None     => println("Unable to find notebook")
 
     def viewNotes =
         val notebook = User.findNotebook
@@ -37,6 +41,22 @@ object Notebook:
 
 class Notebook(val name: String):
     var notes = List.empty[Note]
+
+    def deleteNote: Unit = 
+        println("\nWhich note would you like to delete?\n")
+        displayNotes
+        try
+            val noteNum = StdIn.readInt().abs
+            if noteNum-1 >= notes.size then
+                println("Invalid selection. Please choose a number under ${notes.size}.")
+            else
+                val (firstHalf, secondHalf) = notes.splitAt(noteNum-1)
+                notes = firstHalf ++ secondHalf.tail
+                User.loop
+        catch
+            case _: java.lang.NumberFormatException => 
+                println("\nInvalid input")
+                deleteNote
 
     def addNote =
         println("\nEnter the text for your note:\n")

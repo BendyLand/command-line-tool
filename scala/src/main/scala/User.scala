@@ -16,6 +16,7 @@ object User:
             case "1" => Notebook.createNotebook
             case "2" => Notebook.writeNewNote
             case "3" => Notebook.viewNotes
+            case "4" => Notebook.deleteNote
             case _ =>
                 println("\nShutting down notebook app...")
 
