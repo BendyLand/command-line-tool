@@ -9,7 +9,7 @@ object User:
     def loop: Unit =
         println(
             "\nPlease choose an action:\n" +
-            "\n1.) Create new notebook\n2.) Write note\n3.) View notes\n4.) Delete note\n5.) Exit\n"
+            "\n1.) Create new notebook\n2.) Write note\n3.) View notes\n4.) Delete note\n5.) Delete notebook\n6.) Exit\n"
         )
         val input = StdIn.readLine().trim()
         input match
@@ -17,6 +17,8 @@ object User:
             case "2" => Notebook.writeNewNote
             case "3" => Notebook.viewNotes
             case "4" => Notebook.deleteNote
+            case "5" => User.deleteNotebook
+            case ""  => User.loop
             case _ =>
                 println("\nShutting down notebook app...")
 
@@ -34,6 +36,18 @@ object User:
             case _: java.lang.NumberFormatException => 
                 println("\nInvalid input")
                 findNotebook
+
+    def deleteNotebook: Unit = 
+        println("\nWhich notebook would you like to delete?\n")
+        displayNotebooks
+        val nbNum = StdIn.readInt().abs
+        if nbNum-1 >= notebooks.size then
+            println(s"\nInvalid selection. Please choose a number under ${notebooks.size}\n")
+            deleteNotebook
+        else
+            val (firstHalf, secondHalf) = notebooks.splitAt(nbNum-1)
+            notebooks = firstHalf ++ secondHalf.tail
+            User.loop
 
     def createNewNotebook(name: String) =
         notebooks = Notebook(name) +: notebooks

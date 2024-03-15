@@ -9,7 +9,8 @@ object Notebook:
         val notebook = User.findNotebook
         notebook match
             case Some(nb) => nb.deleteNote
-            case None     => println("Unable to find notebook")
+            case None     => println("\nUnable to find notebook")
+        User.loop
 
     def viewNotes =
         val notebook = User.findNotebook
@@ -43,12 +44,12 @@ class Notebook(val name: String):
     var notes = List.empty[Note]
 
     def deleteNote: Unit = 
-        println("\nWhich note would you like to delete?\n")
+        println("\nWhich note would you like to delete?")
         displayNotes
         try
             val noteNum = StdIn.readInt().abs
             if noteNum-1 >= notes.size then
-                println("Invalid selection. Please choose a number under ${notes.size}.")
+                println(s"\nInvalid selection. Please choose a number under ${notes.size}.")
             else
                 val (firstHalf, secondHalf) = notes.splitAt(noteNum-1)
                 notes = firstHalf ++ secondHalf.tail
@@ -68,3 +69,4 @@ class Notebook(val name: String):
         println("\nHere are your notes:\n")
         for i <- 1 to notes.size do
             println(s"$i.) ${notes(i-1).body}")
+        println()
